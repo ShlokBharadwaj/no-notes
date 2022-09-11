@@ -84,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
                                       email: email, password: password);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('User Logged In'),
+                                  content: Text('User Successfully Logged In'),
                                 ),
                               );
                             } on FirebaseAuthException catch (e) {
