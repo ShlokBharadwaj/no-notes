@@ -10,7 +10,7 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.deepPurple,
     ),
-    home: const HomePage(),
+    home: const RegisterView(),
   ));
 }
 
@@ -22,20 +22,6 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
