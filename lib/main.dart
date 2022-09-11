@@ -12,6 +12,7 @@ void main() {
       primarySwatch: Colors.deepPurple,
     ),
     home: const LoginView(),
+    // darkTheme: ThemeData.dark(),
   ));
 }
 
