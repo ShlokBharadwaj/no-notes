@@ -48,50 +48,9 @@ class _HomePageState extends State<HomePage> {
             options: DefaultFirebaseOptions.currentPlatform),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
-            case ConnectionState.none:
             case ConnectionState.waiting:
               return const Center(child: CircularProgressIndicator());
-            // case ConnectionState.done:
-            //   return Column(
-            //     children: [
-            //       TextField(
-            //         controller: _email,
-            //         enableSuggestions: false,
-            //         autocorrect: false,
-            //         keyboardType: TextInputType.emailAddress,
-            //         decoration: const InputDecoration(
-            //           hintText: "Email",
-            //         ),
-            //       ),
-            //       TextField(
-            //         controller: _password,
-            //         obscureText: true,
-            //         enableSuggestions: false,
-            //         autocorrect: false,
-            //         decoration: const InputDecoration(
-            //           hintText: "Password",
-            //         ),
-            //       ),
-            //       TextButton(
-            //         onPressed: () async {
-            //           final email = _email.text;
-            //           final password = _password.text;
-            //           try {
-            //             final UserCredential = await FirebaseAuth.instance
-            //                 .createUserWithEmailAndPassword(
-            //               email: email,
-            //               password: password,
-            //             );
-            //             print(UserCredential);
-            //           } on FirebaseAuthException catch (e) {
-            //             print(e);
-            //           }
-            //         },
-            //         child: const Text("Register"),
-            //       ),
-            //     ],
-            //   );
-            default:
+            case ConnectionState.done:
               {
                 if (snapshot.hasError) {
                   return Center(
@@ -105,6 +64,9 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         TextField(
                           controller: _email,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Email',
@@ -113,6 +75,9 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(height: 16),
                         TextField(
                           controller: _password,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Password',
@@ -146,6 +111,8 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
               }
+            default:
+              return const SizedBox.shrink();
           }
         },
       ),
