@@ -1,7 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     title: 'Flutter Demo',
     theme: ThemeData(
@@ -64,6 +67,8 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
+              await Firebase.initializeApp(
+                  options: DefaultFirebaseOptions.currentPlatform);
               try {
                 final UserCredential =
                     await FirebaseAuth.instance.createUserWithEmailAndPassword(
