@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-enum MenuAction { logout }
+enum MenuAction { logout, deleteUser }
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -81,11 +81,19 @@ class _NotesViewState extends State<NotesView> {
                 await FirebaseAuth.instance.signOut();
                 Navigator.of(context).pushReplacementNamed('/login');
               }
+              if (action == MenuAction.deleteUser) {
+                await FirebaseAuth.instance.currentUser!.delete();
+                Navigator.of(context).pushReplacementNamed('/register');
+              }
             },
             itemBuilder: (context) => [
               const PopupMenuItem(
                 value: MenuAction.logout,
                 child: Text("Logout"),
+              ),
+              const PopupMenuItem(
+                value: MenuAction.deleteUser,
+                child: Text("Delete User"),
               ),
             ],
           ),
