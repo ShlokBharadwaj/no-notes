@@ -47,15 +47,12 @@ class HomePage extends StatelessWidget {
             if (user != null) {
               if (user.emailVerified) {
                 return const NotesView();
+              } else {
+                return const VerifyEmailView();
               }
-              // TODO: Uncomment and rectify verify email view
-              // else {
-              //   return const VerifyEmailView();
-              // }
             } else {
               return const LoginView();
             }
-            return const NotesView();
           default:
             return const Center(child: CircularProgressIndicator());
         }
