@@ -59,6 +59,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
+enum MenuAction { logout }
+
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
 
@@ -70,7 +72,25 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Notes")),
+      appBar: AppBar(
+        title: const Text("Notes"),
+        actions: [
+          PopupMenuButton<MenuAction>(
+            onSelected: (action) async {
+              if (action == MenuAction.logout) {
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context).pushReplacementNamed('/login');
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: MenuAction.logout,
+                child: Text("Logout"),
+              ),
+            ],
+          ),
+        ],
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(0.0),
