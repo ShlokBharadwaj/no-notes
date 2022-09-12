@@ -80,24 +80,6 @@ class _LoginViewState extends State<LoginView> {
               child: const Text('Login'),
             ),
             ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await FirebaseAuth.instance.signOut();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('User Successfully Logged Out'),
-                      ),
-                    );
-                  } on FirebaseAuthException catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(e.message ?? 'Error'),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Logout')),
-            ElevatedButton(
               onPressed: () async {
                 try {
                   await FirebaseAuth.instance
