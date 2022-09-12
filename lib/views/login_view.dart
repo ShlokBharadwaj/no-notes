@@ -63,7 +63,13 @@ class _LoginViewState extends State<LoginView> {
                   final email = _email.text;
                   final password = _password.text;
                   await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: email, password: password);
+                    email: email,
+                    password: password,
+                  );
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/notes',
+                    (route) => false,
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('User Successfully Logged In'),
