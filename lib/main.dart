@@ -27,34 +27,31 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Home")),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const Center(child: CircularProgressIndicator());
-            case ConnectionState.done:
-              // final user = FirebaseAuth.instance.currentUser;
-              // if (snapshot.hasError) {
-              //   return Center(
-              //     child: Text('Error: ${snapshot.error}'),
-              //   );
-              // } else if (user?.emailVerified ?? false) {
-              //   return Center(
-              //     child: Text('Done. Logged in as user: ${user?.email}'),
-              //   );
-              // } else {
-              //   return const VerifyEmailView();
-              // }
-              return const LoginView();
-            default:
-              return const Text("Loading...");
-          }
-        },
-      ),
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return const Center(child: CircularProgressIndicator());
+          case ConnectionState.done:
+            // final user = FirebaseAuth.instance.currentUser;
+            // if (snapshot.hasError) {
+            //   return Center(
+            //     child: Text('Error: ${snapshot.error}'),
+            //   );
+            // } else if (user?.emailVerified ?? false) {
+            //   return Center(
+            //     child: Text('Done. Logged in as user: ${user?.email}'),
+            //   );
+            // } else {
+            //   return const VerifyEmailView();
+            // }
+            return const LoginView();
+          default:
+            return const Text("Loading...");
+        }
+      },
     );
   }
 }
