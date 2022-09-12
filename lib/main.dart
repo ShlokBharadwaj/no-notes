@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +32,23 @@ class HomePage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             case ConnectionState.done:
               {
+                final user = FirebaseAuth.instance.currentUser;
                 if (snapshot.hasError) {
                   return Center(
                     child: Text('Error: ${snapshot.error}'),
+                  );
+                } else if (user == null) {
+                  return const Center(
+                    child: Text('Not logged in'),
+                  );
+                } else if (user.emailVerified) {
+                  return Center(
+                    child: Text('Logged in as ${user.email}'),
+                  );
+                } else if (!user.emailVerified) {
+                  return const Center(
+                    child: Text(
+                        'Email not verified. You need to verify your email first.'),
                   );
                 } else {
                   return const Center(
