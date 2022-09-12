@@ -133,7 +133,14 @@ class _LoginViewState extends State<LoginView> {
                 }
               },
               child: const Text('Delete User')),
-          ElevatedButton(onPressed: () async {}, child: const Text("Register"))
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/register',
+                  (route) => false,
+                );
+              },
+              child: const Text("Register"))
         ],
       ),
     );
