@@ -94,7 +94,46 @@ class _LoginViewState extends State<LoginView> {
                   );
                 }
               },
-              child: const Text('Logout'))
+              child: const Text('Logout')),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                await FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: _email.text);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Password Reset Email Sent'),
+                  ),
+                );
+              } on FirebaseAuthException catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(e.message ?? 'Error'),
+                  ),
+                );
+              }
+            },
+            child: const Text('Reset Password'),
+          ),
+          ElevatedButton(
+              onPressed: () async {
+                try {
+                  await FirebaseAuth.instance.currentUser!.delete();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('User Deleted'),
+                    ),
+                  );
+                } on FirebaseAuthException catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.message ?? 'Error'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Delete User')),
+          ElevatedButton(onPressed: () async {}, child: const Text("Register"))
         ],
       ),
     );
