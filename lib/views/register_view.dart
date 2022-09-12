@@ -61,7 +61,13 @@ class _RegisterViewState extends State<RegisterView> {
               onPressed: () async {
                 try {
                   await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                      email: _email.text, password: _password.text);
+                    email: _email.text,
+                    password: _password.text,
+                  );
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/login',
+                    (route) => false,
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('User registered'),
