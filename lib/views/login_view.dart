@@ -100,24 +100,6 @@ class _LoginViewState extends State<LoginView> {
               child: const Text('Reset Password'),
             ),
             ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await FirebaseAuth.instance.currentUser!.delete();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('User Deleted'),
-                      ),
-                    );
-                  } on FirebaseAuthException catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(e.message ?? 'Error'),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Delete Current Logged In User')),
-            ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     '/register',
