@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:nonotes/views/login_view.dart';
 
 import 'firebase_options.dart';
 
@@ -31,18 +32,19 @@ class HomePage extends StatelessWidget {
             case ConnectionState.waiting:
               return const Center(child: CircularProgressIndicator());
             case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text('Error: ${snapshot.error}'),
-                );
-              } else if (user?.emailVerified ?? false) {
-                return Center(
-                  child: Text('Done. Logged in as user: ${user?.email}'),
-                );
-              } else {
-                return const VerifyEmailView();
-              }
+              // final user = FirebaseAuth.instance.currentUser;
+              // if (snapshot.hasError) {
+              //   return Center(
+              //     child: Text('Error: ${snapshot.error}'),
+              //   );
+              // } else if (user?.emailVerified ?? false) {
+              //   return Center(
+              //     child: Text('Done. Logged in as user: ${user?.email}'),
+              //   );
+              // } else {
+              //   return const VerifyEmailView();
+              // }
+              return const LoginView();
             default:
               return const Text("Loading...");
           }
