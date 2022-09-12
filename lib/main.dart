@@ -83,8 +83,10 @@ class _NotesViewState extends State<NotesView> {
           PopupMenuButton<MenuAction>(
             onSelected: (action) async {
               if (action == MenuAction.logout) {
-                await FirebaseAuth.instance.signOut();
-                Navigator.of(context).pushReplacementNamed('/login');
+                if (await showLogoutDialog(context)) {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacementNamed('/login');
+                }
               }
               if (action == MenuAction.deleteUser) {
                 await FirebaseAuth.instance.currentUser!.delete();
@@ -117,4 +119,25 @@ class _NotesViewState extends State<NotesView> {
       ),
     );
   }
+}
+
+Future<bool> showLogoutDialog(BuildContext context) async {
+  return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to logout?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text("Logout"),
+            ),
+          ],
+        );
+      }).then((value) => value ?? false);
 }
