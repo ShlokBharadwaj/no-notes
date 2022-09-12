@@ -39,7 +39,8 @@ class HomePage extends StatelessWidget {
                   );
                 } else if (user == null) {
                   return const Center(
-                    child: Text('Not logged in'),
+                    // TODO: Handle Anonymous user here
+                    child: Text('Not logged in. Anonymous'),
                   );
                 } else if (user.emailVerified) {
                   return Center(
