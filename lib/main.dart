@@ -31,37 +31,42 @@ class HomePage extends StatelessWidget {
             case ConnectionState.waiting:
               return const Center(child: CircularProgressIndicator());
             case ConnectionState.done:
-              {
-                final user = FirebaseAuth.instance.currentUser;
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else if (user == null) {
-                  return const Center(
-                    // TODO: Handle Anonymous user here
-                    child: Text('Not logged in. Anonymous'),
-                  );
-                } else if (user.emailVerified) {
-                  return Center(
-                    child: Text('Logged in as ${user.email}'),
-                  );
-                } else if (!user.emailVerified) {
-                  return const Center(
-                    child: Text(
-                        'Email not verified. You need to verify your email first.'),
-                  );
-                } else {
-                  return const Center(
-                    child: Text('Done'),
-                  );
-                }
+              final user = FirebaseAuth.instance.currentUser;
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else if (user?.emailVerified ?? false) {
+                return Center(
+                  child: Text('Logged in as user: ${user?.email}'),
+                );
+              } else {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const VerifyEmailView(),
+                  ),
+                );
               }
+              return const Text("Done");
             default:
               return const Text("Loading...");
           }
         },
       ),
     );
+  }
+}
+
+class VerifyEmailView extends StatefulWidget {
+  const VerifyEmailView({super.key});
+
+  @override
+  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+}
+
+class _VerifyEmailViewState extends State<VerifyEmailView> {
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
   }
 }
