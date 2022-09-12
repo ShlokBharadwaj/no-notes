@@ -134,7 +134,7 @@ class _LoginViewState extends State<LoginView> {
                     );
                   }
                 },
-                child: const Text('Delete User')),
+                child: const Text('Delete Current Logged In User')),
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
