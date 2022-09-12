@@ -44,9 +44,7 @@ class HomePage extends StatelessWidget {
             }
             if (user != null) {
               if (user.emailVerified) {
-                return Center(
-                  child: Text('${user.email} is verified'),
-                );
+                return const NotesView();
               } else {
                 return const VerifyEmailView();
               }
