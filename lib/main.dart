@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:nonotes/views/login_view.dart';
+
+import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +21,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(title: const Text("Home")),
       body: FutureBuilder(
         future: Firebase.initializeApp(
             options: DefaultFirebaseOptions.currentPlatform),
@@ -34,64 +36,13 @@ class HomePage extends StatelessWidget {
                     child: Text('Error: ${snapshot.error}'),
                   );
                 } else {
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextField(
-                          controller: _email,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Email',
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        TextField(
-                          controller: _password,
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Password',
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () async {
-                            try {
-                              final email = _email.text;
-                              final password = _password.text;
-                              final UserCredential = await FirebaseAuth.instance
-                                  .signInWithEmailAndPassword(
-                                      email: email, password: password);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('User Successfully Logged In'),
-                                ),
-                              );
-                            } on FirebaseAuthException catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(e.message ?? 'Error'),
-                                ),
-                              );
-                            }
-                            print(UserCredential);
-                          },
-                          child: const Text('Login'),
-                        ),
-                      ],
-                    ),
+                  return const Center(
+                    child: Text('Done'),
                   );
                 }
               }
             default:
-              return const SizedBox.shrink();
+              return const Text("Loading...");
           }
         },
       ),
