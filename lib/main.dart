@@ -38,16 +38,11 @@ class HomePage extends StatelessWidget {
                 );
               } else if (user?.emailVerified ?? false) {
                 return Center(
-                  child: Text('Logged in as user: ${user?.email}'),
+                  child: Text('Done. Logged in as user: ${user?.email}'),
                 );
               } else {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const VerifyEmailView(),
-                  ),
-                );
+                return const VerifyEmailView();
               }
-              return const Text("Done");
             default:
               return const Text("Loading...");
           }
@@ -67,24 +62,21 @@ class VerifyEmailView extends StatefulWidget {
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: Scaffold(
-        appBar: AppBar(title: const Text("Verify Email")),
-        body: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              const Center(child: Text("Please verify your email address")),
-              ElevatedButton(
-                onPressed: () async {
-                  await FirebaseAuth.instance.currentUser
-                      ?.sendEmailVerification();
-                },
-                child: const Text("Send Verification Email"),
-              ),
-            ],
-          ),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            const Text("Please verify your email address:"),
+            ElevatedButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.currentUser
+                    ?.sendEmailVerification();
+              },
+              child: const Text("Send Verification Email"),
+            )
+          ],
         ),
       ),
     );
