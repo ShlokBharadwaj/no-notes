@@ -79,7 +79,7 @@ class _LoginViewState extends State<LoginView> {
                             try {
                               final email = _email.text;
                               final password = _password.text;
-                              final UserCredential = await FirebaseAuth.instance
+                              await FirebaseAuth.instance
                                   .signInWithEmailAndPassword(
                                       email: email, password: password);
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -94,7 +94,6 @@ class _LoginViewState extends State<LoginView> {
                                 ),
                               );
                             }
-                            print(UserCredential);
                           },
                           child: const Text('Login'),
                         ),
