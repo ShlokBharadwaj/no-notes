@@ -91,7 +91,7 @@ class _NotesViewState extends State<NotesView> {
               if (action == MenuAction.deleteUser) {
                 if (await showDeleteUserDialog(context)) {
                   await FirebaseAuth.instance.currentUser?.delete();
-                  Navigator.of(context).pushReplacementNamed('/login');
+                  Navigator.of(context).pushReplacementNamed('/register');
                 }
               }
             },
