@@ -89,8 +89,10 @@ class _NotesViewState extends State<NotesView> {
                 }
               }
               if (action == MenuAction.deleteUser) {
-                await FirebaseAuth.instance.currentUser!.delete();
-                Navigator.of(context).pushReplacementNamed('/register');
+                if (await showDeleteUserDialog(context)) {
+                  await FirebaseAuth.instance.currentUser?.delete();
+                  Navigator.of(context).pushReplacementNamed('/login');
+                }
               }
             },
             itemBuilder: (context) => [
@@ -136,6 +138,27 @@ Future<bool> showLogoutDialog(BuildContext context) async {
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
               child: const Text("Logout"),
+            ),
+          ],
+        );
+      }).then((value) => value ?? false);
+}
+
+Future<bool> showDeleteUserDialog(BuildContext context) async {
+  return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Delete User"),
+          content: const Text("Are you sure you want to delete your user?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text("Delete User"),
             ),
           ],
         );
