@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nonotes/constants/routes.dart';
+import 'package:nonotes/services/auth/auth_exception.dart';
+import 'package:nonotes/services/auth/auth_services.dart';
 import 'package:nonotes/utilities/custom_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -64,12 +65,12 @@ class _LoginViewState extends State<LoginView> {
                 try {
                   final email = _email.text;
                   final password = _password.text;
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  await AuthService.firebase().logIn(
                     email: email,
                     password: password,
                   );
-                  final user = FirebaseAuth.instance.currentUser;
-                  if (user?.emailVerified ?? false) {
+                  final user = AuthService.firebase().currentUser;
+                  if (user?.isEmailVerified ?? false) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       notesRoute,
                       (route) => false,
@@ -83,10 +84,10 @@ class _LoginViewState extends State<LoginView> {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         verifyEmailRoute, (route) => false);
                   }
-                } on FirebaseAuthException catch (e) {
+                } on FirebaseException catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(e.message ?? 'Error'),
+                      content: Text(e.message),
                     ),
                   );
                 } catch (e) {
@@ -101,17 +102,17 @@ class _LoginViewState extends State<LoginView> {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  await FirebaseAuth.instance
+                  await AuthService.firebase()
                       .sendPasswordResetEmail(email: _email.text);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Password Reset Email Sent'),
                     ),
                   );
-                } on FirebaseAuthException catch (e) {
+                } on FirebaseException catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(e.message ?? 'Error'),
+                      content: Text(e.message),
                     ),
                   );
                 } catch (e) {
