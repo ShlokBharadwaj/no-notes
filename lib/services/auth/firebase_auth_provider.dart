@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nonotes/constants/routes.dart';
 import 'package:nonotes/services/auth/auth_provider.dart';
 import 'package:nonotes/services/auth/auth_exception.dart';
 import 'package:nonotes/services/auth/auth_user.dart';
@@ -67,6 +68,17 @@ class FirebaseAuthProvider implements AuthProvider {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await FirebaseAuth.instance.signOut();
+    } else {
+      throw UserNotLoggedInAuthException("User not logged in");
+    }
+  }
+
+  @override
+  Future<AuthUser> deleteUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await user.delete();
+      return AuthUser.fromFirebase(user);
     } else {
       throw UserNotLoggedInAuthException("User not logged in");
     }
