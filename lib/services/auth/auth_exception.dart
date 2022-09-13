@@ -17,3 +17,14 @@ class UserNotLoggedInException implements Exception {
   @override
   String toString() => message;
 }
+
+// Firebase exceptions
+
+class FirebaseException implements Exception {
+  final String message;
+
+  FirebaseException(this.message);
+
+  @override
+  String toString() => message;
+}
