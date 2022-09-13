@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nonotes/constants/routes.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -67,7 +68,7 @@ class _LoginViewState extends State<LoginView> {
                     password: password,
                   );
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/notes',
+                    notesRoute,
                     (route) => false,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -108,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/register',
+                    registerRoute,
                     (route) => false,
                   );
                 },
