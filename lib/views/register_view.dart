@@ -67,9 +67,8 @@ class _RegisterViewState extends State<RegisterView> {
                     email: _email.text,
                     password: _password.text,
                   );
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute,
-                    (route) => false,
+                  Navigator.of(context).pushNamed(
+                    verifyEmailRoute,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
