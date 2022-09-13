@@ -23,13 +23,13 @@ class AuthService implements AuthProvider {
     );
   }
 
+  @override
   Future<AuthUser> deleteUser() {
     return provider.deleteUser();
   }
 
   @override
-  // TODO: implement currenUser
-  AuthUser? get currenUser => provider.currenUser;
+  AuthUser? get currentUser => provider.currentUser;
 
   @override
   Future<AuthUser> logIn({
