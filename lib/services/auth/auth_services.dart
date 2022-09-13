@@ -8,31 +8,38 @@ class AuthService implements AuthProvider {
   const AuthService(this.provider);
 
   @override
-  Future<AuthUser> createUser(
-      {required String email, required String password}) {
-    // TODO: implement createUser
-    throw UnimplementedError();
+  Future<AuthUser> createUser({
+    required String email,
+    required String password,
+  }) {
+    return provider.createUser(
+      email: email,
+      password: password,
+    );
   }
 
   @override
   // TODO: implement currenUser
-  AuthUser? get currenUser => throw UnimplementedError();
+  AuthUser? get currenUser => provider.currenUser;
 
   @override
-  Future<AuthUser> logIn({required String email, required String password}) {
-    // TODO: implement logIn
-    throw UnimplementedError();
+  Future<AuthUser> logIn({
+    required String email,
+    required String password,
+  }) {
+    return provider.logIn(
+      email: email,
+      password: password,
+    );
   }
 
   @override
   Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+    return provider.logOut();
   }
 
   @override
   Future<void> sendEmailVerification() {
-    // TODO: implement sendEmailVerification
-    throw UnimplementedError();
+    return provider.sendEmailVerification();
   }
 }
