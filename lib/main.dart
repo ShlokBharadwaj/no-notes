@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:nonotes/views/login_view.dart';
 import 'package:nonotes/views/register_view.dart';
 import 'package:nonotes/views/verify_email_view.dart';
-import 'dart:developer' as devtools show log;
+// import 'dart:developer' as devtools show log;
 
 import 'firebase_options.dart';
 
 void main() {
-  devtools.log("main() called");
+  // devtools.log("main() called");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     title: 'Flutter Demo',
@@ -111,9 +111,9 @@ class _NotesViewState extends State<NotesView> {
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Column(
-            children: [
-              const SizedBox(height: 16),
-              const Text("Notes"),
+            children: const [
+              SizedBox(height: 16),
+              Text("Notes"),
             ],
           ),
         ),
