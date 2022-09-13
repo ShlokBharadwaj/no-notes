@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nonotes/constants/routes.dart';
 
+import '../utilities/custom_error_dialog.dart';
+
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
 
@@ -79,6 +81,11 @@ class _RegisterViewState extends State<RegisterView> {
                     SnackBar(
                       content: Text(e.message ?? 'Error'),
                     ),
+                  );
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    e.toString(),
                   );
                 }
               },
