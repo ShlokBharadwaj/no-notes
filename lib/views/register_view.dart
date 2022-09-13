@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nonotes/constants/routes.dart';
+import 'package:nonotes/services/auth/auth_exception.dart';
+import 'package:nonotes/services/auth/auth_services.dart';
 import 'package:nonotes/utilities/custom_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
@@ -62,12 +63,12 @@ class _RegisterViewState extends State<RegisterView> {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  await AuthService.firebase().createUser(
                     email: _email.text,
                     password: _password.text,
                   );
-                  final user = FirebaseAuth.instance.currentUser;
-                  await user?.sendEmailVerification();
+                  final user = AuthService.firebase().currentUser;
+                  await AuthService.firebase().sendEmailVerification();
                   Navigator.of(context).pushNamed(
                     verifyEmailRoute,
                   );
@@ -76,10 +77,10 @@ class _RegisterViewState extends State<RegisterView> {
                       content: Text('User registered'),
                     ),
                   );
-                } on FirebaseAuthException catch (e) {
+                } on FirebaseException catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(e.message ?? 'Error'),
+                      content: Text(e.message),
                     ),
                   );
                 } catch (e) {
