@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nonotes/constants/routes.dart';
 import 'package:nonotes/enums/menu_action.dart';
+import 'package:nonotes/services/auth/auth_provider.dart';
+import 'package:nonotes/services/auth/auth_services.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -21,13 +22,13 @@ class _NotesViewState extends State<NotesView> {
             onSelected: (action) async {
               if (action == MenuAction.logout) {
                 if (await showLogoutDialog(context)) {
-                  await FirebaseAuth.instance.signOut();
+                  await AuthService.firebase().logOut();
                   Navigator.of(context).pushReplacementNamed(loginRoute);
                 }
               }
               if (action == MenuAction.deleteUser) {
                 if (await showDeleteUserDialog(context)) {
-                  await FirebaseAuth.instance.currentUser?.delete();
+                  await AuthService.firebase().deleteUser();
                   Navigator.of(context).pushReplacementNamed(registerRoute);
                 }
               }
