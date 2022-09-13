@@ -9,10 +9,10 @@ class NonFirebaseException implements Exception {
   String toString() => message;
 }
 
-class UserNotLoggedInException implements Exception {
+class UserNotLoggedInAuthException implements Exception {
   final String message;
 
-  UserNotLoggedInException(this.message);
+  UserNotLoggedInAuthException(this.message);
 
   @override
   String toString() => message;
