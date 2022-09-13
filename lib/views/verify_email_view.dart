@@ -19,7 +19,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              const Text("Please verify your email address:"),
+              const Text(
+                  'We\'ve sent you an email verification. Please click on the link in email to verify your account'),
+              const Text(
+                  "If you haven't received a verification email yet, press the button below:"),
               ElevatedButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.currentUser
