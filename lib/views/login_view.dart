@@ -82,6 +82,11 @@ class _LoginViewState extends State<LoginView> {
                       content: Text(e.message ?? 'Error'),
                     ),
                   );
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    e.toString(),
+                  );
                 }
               },
               child: const Text('Login'),
@@ -102,6 +107,11 @@ class _LoginViewState extends State<LoginView> {
                       content: Text(e.message ?? 'Error'),
                     ),
                   );
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    e.toString(),
+                  );
                 }
               },
               child: const Text('Reset Password'),
@@ -119,4 +129,27 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
+}
+
+Future<void> showErrorDialog(
+  BuildContext context,
+  String message,
+) async {
+  return showDialog<void>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
 }
