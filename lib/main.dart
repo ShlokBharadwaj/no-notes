@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
               );
             }
             if (user != null) {
-              if (user.emailVerified) {
+              if (user.isEmailVerified) {
                 return const NotesView();
               } else {
                 return const VerifyEmailView();
