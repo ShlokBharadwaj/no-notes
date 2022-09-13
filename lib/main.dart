@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nonotes/constants/routes.dart';
+import 'package:nonotes/services/auth/auth_services.dart';
 import 'package:nonotes/views/login_view.dart';
 import 'package:nonotes/views/notes_view.dart';
 import 'package:nonotes/views/register_view.dart';
@@ -35,14 +34,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform),
+      future: AuthService.firebase().initialize(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return const Center(child: CircularProgressIndicator());
           case ConnectionState.done:
-            final user = FirebaseAuth.instance.currentUser;
+            final user = AuthService.firebase().currentUser;
             if (snapshot.hasError) {
               return Center(
                 child: Text('Error: ${snapshot.error}'),
