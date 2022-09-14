@@ -15,6 +15,11 @@ void main() {
       expect(() => provider.logOut(),
           throwsA(const TypeMatcher<NotInitializedException>()));
     });
+
+    test('Should be able to initialize', () async {
+      await provider.initialize();
+      expect(provider.isInitialized, true);
+    });
   });
 }
 
