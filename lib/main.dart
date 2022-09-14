@@ -11,7 +11,7 @@ void main() {
   // devtools.log("main() called");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-    title: 'Flutter Demo',
+    title: 'No Notes',
     theme: ThemeData(
       primarySwatch: Colors.deepPurple,
     ),
