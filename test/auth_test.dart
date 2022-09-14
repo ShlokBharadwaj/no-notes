@@ -30,8 +30,9 @@ class MockAuthProvider implements AuthProvider {
 
   @override
   Future<AuthUser> deleteUser() {
-    // TODO: implement deleteUser
-    throw UnimplementedError();
+    if (!isInitialized) throw NotInitializedException();
+    _user = null;
+    return Future.value(_user);
   }
 
   @override
@@ -68,7 +69,6 @@ class MockAuthProvider implements AuthProvider {
     if (user == null) throw FirebaseException("User not logged in");
     const newUser = AuthUser(isEmailVerified: true);
     _user = newUser;
-    return await Future.value();
   }
 
   @override
