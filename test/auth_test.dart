@@ -3,6 +3,7 @@ import 'package:nonotes/services/auth/auth_provider.dart';
 import 'package:nonotes/services/auth/auth_user.dart';
 import 'package:test/test.dart';
 
+// TODO: Run failed tests again after fixing them
 void main() {
   group('Mock Authentication', () {
     final provider = MockAuthProvider();
