@@ -20,6 +20,14 @@ void main() {
       await provider.initialize();
       expect(provider.isInitialized, true);
     });
+
+    test('Should be able to log in', () async {
+      final user = await provider.logIn(
+        email: 'shlok@gmail.com',
+        password: 'password',
+      );
+      expect(user, isNotNull);
+    });
   });
 }
 
