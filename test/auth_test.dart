@@ -10,6 +10,11 @@ void main() {
     test('Should not be initialized to begin with', () {
       expect(provider.isInitialized, false);
     });
+
+    test('Can\'t logout if not initialized', () {
+      expect(() => provider.logOut(),
+          throwsA(const TypeMatcher<NotInitializedException>()));
+    });
   });
 }
 
