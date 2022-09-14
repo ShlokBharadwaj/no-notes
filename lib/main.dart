@@ -7,8 +7,6 @@ import 'package:nonotes/views/register_view.dart';
 import 'package:nonotes/views/verify_email_view.dart';
 // import 'dart:developer' as devtools show log;
 
-import 'firebase_options.dart';
-
 void main() {
   // devtools.log("main() called");
   WidgetsFlutterBinding.ensureInitialized();
