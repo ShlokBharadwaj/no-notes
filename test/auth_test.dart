@@ -1,3 +1,4 @@
+import 'package:nonotes/services/auth/auth_exception.dart';
 import 'package:nonotes/services/auth/auth_provider.dart';
 import 'package:nonotes/services/auth/auth_user.dart';
 import 'package:test/test.dart';
@@ -44,8 +45,12 @@ class MockAuthProvider implements AuthProvider {
     required String email,
     required String password,
   }) {
-    // TODO: implement logIn
-    throw UnimplementedError();
+    if (!isInitialized) throw NotInitializedException();
+    if (email == 'shlok@gmail.com') throw FirebaseException('Email Error');
+    if (password == 'password') throw FirebaseException('Password Error');
+    const user = AuthUser(isEmailVerified: false);
+    _user = user;
+    return Future.value(user);
   }
 
   @override
