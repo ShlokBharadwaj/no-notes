@@ -45,6 +45,19 @@ void main() {
         password: '123456',
       );
       expect(badEmailUser, throwsA(const TypeMatcher<FirebaseException>()));
+
+      final badPasswordUser = provider.createUser(
+        email: 'shlok@gmail.com',
+        password: 'badPass',
+      );
+      expect(badPasswordUser, throwsA(const TypeMatcher<FirebaseException>()));
+
+      final user = await provider.createUser(
+        email: 'test@gmail.in',
+        password: 'test',
+      );
+      expect(provider.currentUser, user);
+      expect(user.isEmailVerified, false);
     });
 
     test('Should be able to log out', () async {
