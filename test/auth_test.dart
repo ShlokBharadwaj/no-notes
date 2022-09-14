@@ -69,6 +69,12 @@ void main() {
       await provider.deleteUser();
       expect(provider.isInitialized, true);
     });
+
+    test('Logged in user should be able to get verified', () {
+      provider.sendEmailVerification();
+      final user = provider.currentUser;
+      expect(user, isNotNull);
+    });
   });
 }
 
