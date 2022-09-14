@@ -74,6 +74,7 @@ void main() {
       provider.sendEmailVerification();
       final user = provider.currentUser;
       expect(user, isNotNull);
+      expect(user!.isEmailVerified, true);
     });
   });
 }
