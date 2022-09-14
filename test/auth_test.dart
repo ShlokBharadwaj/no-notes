@@ -54,9 +54,11 @@ class MockAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future<void> logOut() async {
+    if (!isInitialized) throw NotInitializedException();
+    if (_user == null) throw FirebaseException("User not logged in");
+    await Future.delayed(const Duration(milliseconds: 1000));
+    _user = null;
   }
 
   @override
