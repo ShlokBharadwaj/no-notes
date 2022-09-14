@@ -3,16 +3,24 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
-class DatabseAlreadyOpenException implements Exception {
-  // const DatabseAlreadyOpenException();
-}
+class DatabseAlreadyOpenException implements Exception {}
 
-class UnableToGetDocumentDirectoryException implements Exception {
-  // const UnableToGetDocumentDirectoryException();
-}
+class UnableToGetDocumentDirectoryException implements Exception {}
+
+class DatabaseIsNotOpenException implements Exception {}
 
 class NotesService {
   Database? _db;
+
+  Future<void> close() async {
+    if (_db != null) {
+      await _db!.close();
+      _db = null;
+    } else {
+      throw DatabaseIsNotOpenException();
+    }
+  }
+
   Future<void> open() async {
     if (_db != null) {
       throw DatabseAlreadyOpenException();
