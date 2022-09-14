@@ -12,6 +12,15 @@ class DatabaseIsNotOpenException implements Exception {}
 class NotesService {
   Database? _db;
 
+  //private function
+  Database _getDatabaseOrThrow() {
+    if (_db == null) {
+      throw DatabaseIsNotOpenException();
+    } else {
+      return _db!;
+    }
+  }
+
   Future<void> close() async {
     if (_db != null) {
       await _db!.close();
