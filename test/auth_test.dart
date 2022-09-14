@@ -21,6 +21,10 @@ void main() {
       expect(provider.isInitialized, true);
     });
 
+    test('User should be null after initialization', () {
+      expect(provider.currentUser, isNull);
+    });
+
     test('Should be able to log in', () async {
       final user = await provider.logIn(
         email: 'shlok@gmail.com',
