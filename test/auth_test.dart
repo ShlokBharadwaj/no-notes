@@ -28,6 +28,11 @@ void main() {
       );
       expect(user, isNotNull);
     });
+
+    test('Should be able to log out', () async {
+      await provider.logOut();
+      expect(provider.isInitialized, true);
+    });
   });
 }
 
