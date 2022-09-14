@@ -64,6 +64,11 @@ void main() {
       await provider.logOut();
       expect(provider.isInitialized, true);
     });
+
+    test('Should be able to delete user', () async {
+      await provider.deleteUser();
+      expect(provider.isInitialized, true);
+    });
   });
 }
 
