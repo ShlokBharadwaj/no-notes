@@ -1,8 +1,40 @@
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
-import 'package:path_provider/path_provider.dart'
-    show getApplicationDocumentsDirectory;
+import 'package:path_provider/path_provider.dart';
+
+class DatabseAlreadyOpenException implements Exception {
+  // const DatabseAlreadyOpenException();
+}
+
+class UnableToGetDocumentDirectoryException implements Exception {
+  // const UnableToGetDocumentDirectoryException();
+}
+
+class NotesService {
+  Database? _db;
+  Future<void> open() async {
+    if (_db != null) {
+      throw DatabseAlreadyOpenException();
+    }
+    try {
+      final dbPath = await getApplicationDocumentsDirectory();
+      final db = await openDatabase(join(dbPath.path, dbName));
+      _db = db;
+
+      // create the user table
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS "user" (
+	        "id"	INTEGER NOT NULL,
+	        "email"	TEXT NOT NULL UNIQUE,
+	        PRIMARY KEY("id" AUTOINCREMENT)
+        );
+      ''');
+    } on MissingPlatformDirectoryException {
+      throw UnableToGetDocumentDirectoryException();
+    }
+  }
+}
 
 @immutable
 class DatabaseUser {
