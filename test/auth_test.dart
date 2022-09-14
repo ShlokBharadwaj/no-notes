@@ -39,6 +39,14 @@ void main() {
       expect(user, isNotNull);
     });
 
+    test('Create user should delegate to login', () async {
+      final badEmailUser = provider.createUser(
+        email: 'shlok@gmail.com',
+        password: '123456',
+      );
+      expect(badEmailUser, throwsA(const TypeMatcher<FirebaseException>()));
+    });
+
     test('Should be able to log out', () async {
       await provider.logOut();
       expect(provider.isInitialized, true);
