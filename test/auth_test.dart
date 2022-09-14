@@ -60,11 +60,6 @@ void main() {
       expect(user.isEmailVerified, false);
     });
 
-    test('Should be able to log out', () async {
-      await provider.logOut();
-      expect(provider.isInitialized, true);
-    });
-
     test('Should be able to delete user', () async {
       await provider.deleteUser();
       expect(provider.isInitialized, true);
@@ -75,6 +70,20 @@ void main() {
       final user = provider.currentUser;
       expect(user, isNotNull);
       expect(user!.isEmailVerified, true);
+    });
+
+    test('Should be able to log out', () async {
+      await provider.logOut();
+      expect(provider.isInitialized, true);
+    });
+
+    test('Should be able to logout and login again', () async {
+      await provider.logOut();
+      await provider.logIn(
+        email: 'nope',
+        password: 'nopeAgain',
+      );
+      expect(provider.currentUser, isNull);
     });
   });
 }
