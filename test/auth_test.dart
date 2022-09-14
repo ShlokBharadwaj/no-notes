@@ -62,9 +62,13 @@ class MockAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<void> sendEmailVerification() {
-    // TODO: implement sendEmailVerification
-    throw UnimplementedError();
+  Future<void> sendEmailVerification() async {
+    if (!isInitialized) throw NotInitializedException();
+    final user = _user;
+    if (user == null) throw FirebaseException("User not logged in");
+    const newUser = AuthUser(isEmailVerified: true);
+    _user = newUser;
+    return await Future.value();
   }
 
   @override
