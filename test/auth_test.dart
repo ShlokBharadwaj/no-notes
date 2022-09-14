@@ -73,7 +73,9 @@ class MockAuthProvider implements AuthProvider {
 
   @override
   Future<void> sendPasswordResetEmail({required String email}) {
-    // TODO: implement sendPasswordResetEmail
-    throw UnimplementedError();
+    if (!isInitialized) throw NotInitializedException();
+    final user = _user;
+    if (user == null) throw FirebaseException("User not logged in");
+    return Future.value();
   }
 }
