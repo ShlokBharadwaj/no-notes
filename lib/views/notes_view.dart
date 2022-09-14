@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nonotes/constants/routes.dart';
 import 'package:nonotes/enums/menu_action.dart';
-import 'package:nonotes/services/auth/auth_provider.dart';
 import 'package:nonotes/services/auth/auth_services.dart';
 
 class NotesView extends StatefulWidget {
