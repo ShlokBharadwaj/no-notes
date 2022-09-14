@@ -25,6 +25,12 @@ void main() {
       expect(provider.currentUser, isNull);
     });
 
+    test('Should be able to initialize in less than 2 seconds', () async {
+      final stopwatch = Stopwatch()..start();
+      await provider.initialize();
+      expect(stopwatch.elapsedMilliseconds, lessThan(2000));
+    });
+
     test('Should be able to log in', () async {
       final user = await provider.logIn(
         email: 'shlok@gmail.com',
