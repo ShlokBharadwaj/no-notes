@@ -25,8 +25,11 @@ class NotesService {
     required String text,
   }) async {
     final db = _getDatabaseOrThrow();
+
+    // Check if notes exists
     await getNote(id: note.id);
 
+    // Update notes in database
     final updatesCount = await db.update(noteTable, {
       textColumn: text,
       isSyncedWithCloudColumn: 0,
@@ -35,7 +38,11 @@ class NotesService {
     if (updatesCount == 0) {
       throw CouldNotUpdateNoteException();
     } else {
-      return await getNote(id: note.id);
+      final updatedNote = await getNote(id: note.id);
+      _notes.removeWhere((note) => note.id == updatedNote.id);
+      _notes.add(updatedNote);
+      _notesStreamController.add(_notes);
+      return updatedNote;
     }
   }
 
