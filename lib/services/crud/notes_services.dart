@@ -17,8 +17,26 @@ class CouldNotFindUserException implements Exception {}
 
 class CouldNotDeleteNoteException implements Exception {}
 
+class CouldNotFindNoteException implements Exception {}
+
 class NotesService {
   Database? _db;
+
+  Future<DatabaseNote> getNote({required int id}) async {
+    final db = _getDatabaseOrThrow();
+    final notes = await db.query(
+      noteTable,
+      limit: 1,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (notes.isEmpty) {
+      throw CouldNotFindNoteException();
+    } else {
+      return DatabaseNote.fromRow(notes.first);
+    }
+  }
 
   Future<int> deleteAllNotes() async {
     final db = _getDatabaseOrThrow();
