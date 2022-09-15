@@ -208,6 +208,7 @@ class NotesService {
 	        FOREIGN KEY("user_id") REFERENCES "user"("id")
         );
       ''');
+      await _cacheNotes();
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentDirectoryException();
     }
