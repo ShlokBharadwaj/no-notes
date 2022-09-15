@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:nonotes/services/crud/crud_exceptions.dart';
 import 'package:sqflite/sqflite.dart';
@@ -6,6 +8,17 @@ import 'package:path_provider/path_provider.dart';
 
 class NotesService {
   Database? _db;
+
+  List<DatabaseNote> _notes = [];
+
+  final _notesStreamController =
+      StreamController<List<DatabaseNote>>.broadcast();
+
+  Future<void> _cacheNotes() async {
+    final allNotes = await getAllNotes();
+    _notes = allNotes.toList();
+    _notesStreamController.add(_notes);
+  }
 
   Future<DatabaseNote> updateNote({
     required DatabaseNote note,
