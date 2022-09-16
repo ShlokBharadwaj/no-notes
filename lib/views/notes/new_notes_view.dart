@@ -21,6 +21,22 @@ class _NewNotesViewState extends State<NewNotesView> {
     super.initState();
   }
 
+  void _textControllerListener() async {
+    if (_note == null) {
+      return;
+    } else {
+      await _notesService.updateNote(
+        note: _note!,
+        text: _textEditingController.text,
+      );
+    }
+  }
+
+  void _setupTextControllerListener() {
+    _textEditingController.removeListener(_textControllerListener);
+    _textEditingController.addListener(_textControllerListener);
+  }
+
   Future<DatabaseNote> createNewNote() async {
     final existingNote = _note;
     if (existingNote != null) {
@@ -65,12 +81,36 @@ class _NewNotesViewState extends State<NewNotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("New Note"),
-      ),
-      body: const Center(
-        child: Text("Write your new note here..."),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("New Note"),
+        ),
+        body: FutureBuilder(
+          future: createNewNote(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                _note = snapshot.data
+                    as DatabaseNote?; // to remove type cast Red Screen of Death 👹
+                _setupTextControllerListener();
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.multiline,
+                    autofocus: true,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Start typing...",
+                    ),
+                  ),
+                );
+              default:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+            }
+          },
+        ));
   }
 }
