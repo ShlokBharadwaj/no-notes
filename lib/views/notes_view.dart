@@ -66,8 +66,18 @@ class _NotesViewState extends State<NotesView> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-                return const Center(
-                    child: Text("All the notes will appear here"));
+                return StreamBuilder(
+                  stream: _notesService.allNotes,
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Center(
+                            child: Text("Waiting for all notes..."));
+                      default:
+                        return const CircularProgressIndicator();
+                    }
+                  },
+                );
               default:
                 return const Center(child: CircularProgressIndicator());
             }
