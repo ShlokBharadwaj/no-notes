@@ -30,49 +30,49 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Notes"),
-        actions: [
-          PopupMenuButton<MenuAction>(
-            onSelected: (action) async {
-              if (action == MenuAction.logout) {
-                if (await showLogoutDialog(context)) {
-                  await AuthService.firebase().logOut();
-                  Navigator.of(context).pushReplacementNamed(loginRoute);
+        appBar: AppBar(
+          title: const Text("Notes"),
+          actions: [
+            PopupMenuButton<MenuAction>(
+              onSelected: (action) async {
+                if (action == MenuAction.logout) {
+                  if (await showLogoutDialog(context)) {
+                    await AuthService.firebase().logOut();
+                    Navigator.of(context).pushReplacementNamed(loginRoute);
+                  }
                 }
-              }
-              if (action == MenuAction.deleteUser) {
-                if (await showDeleteUserDialog(context)) {
-                  await AuthService.firebase().deleteUser();
-                  Navigator.of(context).pushReplacementNamed(registerRoute);
+                if (action == MenuAction.deleteUser) {
+                  if (await showDeleteUserDialog(context)) {
+                    await AuthService.firebase().deleteUser();
+                    Navigator.of(context).pushReplacementNamed(registerRoute);
+                  }
                 }
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: MenuAction.logout,
-                child: Text("Logout"),
-              ),
-              const PopupMenuItem(
-                value: MenuAction.deleteUser,
-                child: Text("Delete User"),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Column(
-            children: const [
-              SizedBox(height: 16),
-              Text("Notes"),
-            ],
-          ),
+              },
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                  value: MenuAction.logout,
+                  child: Text("Logout"),
+                ),
+                const PopupMenuItem(
+                  value: MenuAction.deleteUser,
+                  child: Text("Delete User"),
+                ),
+              ],
+            ),
+          ],
         ),
-      ),
-    );
+        body: FutureBuilder(
+          future: _notesService.getOrCreateUser(email: userEmail),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                return const Center(
+                    child: Text("All the notes will appear here"));
+              default:
+                return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ));
   }
 }
 
