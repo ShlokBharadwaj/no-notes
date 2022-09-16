@@ -22,7 +22,7 @@ class NotesService {
       final createdUser = await createUser(email: email);
       return createdUser;
     } catch (e) {
-      rethrow;
+      rethrow; //for debugging
     }
   }
 
