@@ -38,13 +38,15 @@ class _NotesViewState extends State<NotesView> {
               if (action == MenuAction.logout) {
                 if (await showLogoutDialog(context)) {
                   await AuthService.firebase().logOut();
-                  Navigator.of(context).pushReplacementNamed(loginRoute);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                 }
               }
               if (action == MenuAction.deleteUser) {
                 if (await showDeleteUserDialog(context)) {
                   await AuthService.firebase().deleteUser();
-                  Navigator.of(context).pushReplacementNamed(registerRoute);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(registerRoute, (_) => false);
                 }
               }
             },
