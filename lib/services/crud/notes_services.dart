@@ -251,25 +251,11 @@ class NotesService {
       _db = db;
 
       // create the user table
-      await db.execute('''
-        CREATE TABLE IF NOT EXISTS "user" (
-	        "id"	INTEGER NOT NULL,
-	        "email"	TEXT NOT NULL UNIQUE,
-	        PRIMARY KEY("id" AUTOINCREMENT)
-        );
-      ''');
+      await db.execute(createUserTable);
 
       // create the notes table
-      await db.execute('''
-        CREATE TABLE IF NOT EXISTS "note" (
-          "id"	INTEGER NOT NULL,
-	        "user_id"	INTEGER NOT NULL,
-	        "text"	TEXT,
-	        "is_synced_with_server"	INTEGER NOT NULL DEFAULT 0,
-	        PRIMARY KEY("id" AUTOINCREMENT),
-	        FOREIGN KEY("user_id") REFERENCES "user"("id")
-        );
-      ''');
+      await db.execute(createNoteTable);
+
       await _cacheNotes();
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentDirectoryException();
@@ -343,4 +329,17 @@ const idColumn = 'id';
 const emailColumn = 'email';
 const userIdColumn = 'user_id';
 const textColumn = 'text';
-const isSyncedWithCloudColumn = 'is_synced_with_cloud';
+const isSyncedWithCloudColumn = 'is_synced_with_server';
+const createUserTable = '''CREATE TABLE IF NOT EXISTS "user" (
+        "id"	INTEGER NOT NULL,
+        "email"	TEXT NOT NULL UNIQUE,
+        PRIMARY KEY("id" AUTOINCREMENT)
+      );''';
+const createNoteTable = '''CREATE TABLE IF NOT EXISTS "note" (
+        "id"	INTEGER NOT NULL,
+	      "user_id"	INTEGER NOT NULL,
+	      "text"	TEXT,
+	      "is_synced_with_server"	INTEGER NOT NULL DEFAULT 0,
+	      PRIMARY KEY("id" AUTOINCREMENT),
+	      FOREIGN KEY("user_id") REFERENCES "user"("id")
+      );''';
