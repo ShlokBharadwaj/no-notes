@@ -121,11 +121,8 @@ class NotesService {
     if (deletedCount == 0) {
       throw CouldNotDeleteNoteException();
     } else {
-      final counrBefore = _notes.length;
       _notes.removeWhere((note) => note.id == id);
-      if (_notes.length != counrBefore) {
-        _notesStreamController.add(_notes);
-      }
+      _notesStreamController.add(_notes);
     }
   }
 
