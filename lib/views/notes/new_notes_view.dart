@@ -92,7 +92,7 @@ class _NewNotesViewState extends State<NewNotesView> {
                 _note = snapshot.data as DatabaseNote; // add ! to remove RSOD
                 _setupTextControllerListener();
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                   child: TextField(
                     controller: _textEditingController,
                     keyboardType: TextInputType.multiline,
