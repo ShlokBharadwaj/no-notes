@@ -89,8 +89,7 @@ class _NewNotesViewState extends State<NewNotesView> {
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-                _note = snapshot.data
-                    as DatabaseNote?; // to remove type cast Red Screen of Death 👹
+                _note = snapshot.data as DatabaseNote; // add ! to remove RSOD
                 _setupTextControllerListener();
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
