@@ -27,6 +27,11 @@ class NotesListView extends StatelessWidget {
             softWrap: true,
             overflow: TextOverflow.ellipsis,
           ),
+          // TODO: Add strikethrough functionality
+          leading: IconButton(
+            onPressed: () async {},
+            icon: const Icon(Icons.check_box),
+          ),
           trailing: IconButton(
             onPressed: () async {
               final shouldDelete = await showDeleteDialog(context);
