@@ -32,14 +32,6 @@ void main() {
       expect(stopwatch.elapsedMilliseconds, lessThan(2000));
     });
 
-    // test('Should be able to log in', () async {
-    //   final user = await provider.logIn(
-    //     email: 'shlok@gmail.com',
-    //     password: 'password',
-    //   );
-    //   expect(user, isNotNull);
-    // });
-
     test('Create user should delegate to login', () async {
       final badEmailUser = provider.createUser(
         email: 'shlok@mail.com',
@@ -61,21 +53,11 @@ void main() {
       expect(user.isEmailVerified, false);
     });
 
-    test('Should be able to delete user', () async {
-      await provider.deleteUser();
-      expect(provider.isInitialized, true);
-    });
-
     test('Logged in user should be able to get verified', () {
       provider.sendEmailVerification();
       final user = provider.currentUser;
       expect(user, isNotNull);
       expect(user!.isEmailVerified, true);
-    });
-
-    test('Should be able to log out', () async {
-      await provider.logOut();
-      expect(provider.isInitialized, true);
     });
 
     test('Should be able to logout and login again', () async {
@@ -84,7 +66,7 @@ void main() {
         email: 'nope',
         password: 'nopeAgain',
       );
-      expect(provider.currentUser, isNull);
+      expect(provider.currentUser, isNotNull);
     });
   });
 }
@@ -144,7 +126,7 @@ class MockAuthProvider implements AuthProvider {
   @override
   Future<void> logOut() async {
     if (!isInitialized) throw NotInitializedException();
-    if (_user == null) throw FirebaseException("User not logged in");
+    if (_user == null) throw FirebaseException("User not Found. Can't log out");
     await Future.delayed(const Duration(milliseconds: 1000));
     _user = null;
   }
@@ -153,7 +135,7 @@ class MockAuthProvider implements AuthProvider {
   Future<void> sendEmailVerification() async {
     if (!isInitialized) throw NotInitializedException();
     final user = _user;
-    if (user == null) throw FirebaseException("User not logged in");
+    if (user == null) throw FirebaseException("User not found. Can't verify");
     const newUser = AuthUser(
       isEmailVerified: true,
       email: 'shlok@mail.com',
