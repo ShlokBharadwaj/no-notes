@@ -98,7 +98,7 @@ class _NotesViewState extends State<NotesView> {
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(newNotesRoute);
+            Navigator.of(context).pushNamed(createOrUpdateNotesRoute);
           },
           child: const Icon(Icons.add),
         ),

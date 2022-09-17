@@ -22,7 +22,7 @@ void main() {
       registerRoute: (context) => const RegisterView(),
       notesRoute: (context) => const NotesView(),
       verifyEmailRoute: (context) => const VerifyEmailView(),
-      newNotesRoute: (context) => const CreateUpdateNoteView(),
+      createOrUpdateNotesRoute: (context) => const CreateUpdateNoteView(),
     },
     // darkTheme: ThemeData.dark(),
   ));
