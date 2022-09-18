@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:nonotes/extenions/list/filter.dart';
 import 'package:nonotes/services/crud/crud_exceptions.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' show join;
@@ -10,6 +11,8 @@ class NotesService {
   Database? _db;
 
   List<DatabaseNote> _notes = [];
+
+  DatabaseUser? _user;
 
   static final NotesService _shared = NotesService._sharedInstance();
   NotesService._sharedInstance() {
@@ -21,14 +24,31 @@ class NotesService {
   late final StreamController<List<DatabaseNote>> _notesStreamController;
   factory NotesService() => _shared;
 
-  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
+  Stream<List<DatabaseNote>> get allNotes =>
+      _notesStreamController.stream.filter((note) {
+        final currentUser = _user;
+        if (currentUser != null) {
+          return note.userId == currentUser.id;
+        } else {
+          throw UserShouldBeSetBeforeReadingAllNotesException();
+        }
+      });
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+  Future<DatabaseUser> getOrCreateUser({
+    required String email,
+    bool setAsCurrentUser = true,
+  }) async {
     try {
       final user = await getUser(email: email);
+      if (setAsCurrentUser) {
+        _user = user;
+      }
       return user;
     } on CouldNotFindUserException {
       final createdUser = await createUser(email: email);
+      if (setAsCurrentUser) {
+        _user = createdUser;
+      }
       return createdUser;
     } catch (e) {
       rethrow; //for debugging
