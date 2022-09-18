@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 @immutable
 class AuthUser {
   final String id;
-  final String? email;
+  final String email;
   final bool isEmailVerified;
   const AuthUser({
     required this.id,
