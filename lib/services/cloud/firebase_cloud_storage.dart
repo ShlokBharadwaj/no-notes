@@ -6,6 +6,19 @@ import 'package:nonotes/services/cloud/cloud_storage_exceptions.dart';
 class FirebaseCloudStorage {
   final notes = FirebaseFirestore.instance.collection('notes');
 
+  Future<void> updateNote({
+    required String documentId,
+    required String text,
+  }) async {
+    try {
+      await notes.doc(documentId).update({
+        textFieldName: text,
+      });
+    } on FirebaseException catch (_) {
+      throw const CouldNotUpdateNoteException();
+    }
+  }
+
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) =>
       notes.snapshots().map((event) => event.docs
           .map((
