@@ -43,6 +43,8 @@ class _NotesViewState extends State<NotesView> {
               if (action == MenuAction.deleteUser) {
                 if (await showDeleteUserDialog(context)) {
                   await AuthService.firebase().deleteUser();
+                  // TODO: Add delete notes if user account is deleted
+                  // await _notesService.deleteNote(documentId: '');
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(registerRoute, (_) => false);
                 }
