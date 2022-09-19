@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:nonotes/services/auth/auth_services.dart';
 import 'package:nonotes/utilities/generics/get_arguments.dart';
@@ -29,12 +27,11 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   void _textControllerListener() async {
     if (_note == null) {
       return;
-    } else {
-      await _notesService.updateNote(
-        documentId: _note!.documentId,
-        text: _textEditingController.text,
-      );
     }
+    await _notesService.updateNote(
+      documentId: _note!.documentId,
+      text: _textEditingController.text,
+    );
   }
 
   void _setupTextControllerListener() {
