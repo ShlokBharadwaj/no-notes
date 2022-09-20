@@ -92,6 +92,12 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("New Note"),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.share),
+            )
+          ],
         ),
         body: FutureBuilder(
           future: createOrGetExistingNote(context),
