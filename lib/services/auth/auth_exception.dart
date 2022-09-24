@@ -1,30 +1,49 @@
-// Non firebase exceptions
+// login exceptions
+class UserNotFoundAuthException implements Exception {}
 
-class NonFirebaseException implements Exception {
-  final String message;
+class WrongPasswordAuthException implements Exception {}
 
-  NonFirebaseException(this.message);
+// register exceptions
 
-  @override
-  String toString() => message;
-}
+class WeakPasswordAuthException implements Exception {}
 
-class UserNotLoggedInAuthException implements Exception {
-  final String message;
+class EmailAlreadyInUseAuthException implements Exception {}
 
-  UserNotLoggedInAuthException(this.message);
+class InvalidEmailAuthException implements Exception {}
 
-  @override
-  String toString() => message;
-}
+// generic exceptions
 
-// Firebase exceptions
+class GenericAuthException implements Exception {}
 
-class FirebaseException implements Exception {
-  final String message;
+class UserNotLoggedInAuthException implements Exception {}
 
-  FirebaseException(this.message);
+// // Non firebase exceptions
 
-  @override
-  String toString() => message;
-}
+// class NonFirebaseException implements Exception {
+//   final String message;
+
+//   NonFirebaseException(this.message);
+
+//   @override
+//   String toString() => message;
+// }
+
+// class UserNotLoggedInAuthException implements Exception {
+//   final String message;
+
+//   UserNotLoggedInAuthException(this.message);
+
+//   @override
+//   String toString() => message;
+// }
+
+// // Firebase exceptions
+
+// class FirebaseException implements Exception {
+//   final String message;
+
+//   FirebaseException(this.message);
+
+//   @override
+//   String toString() => message;
+// }
