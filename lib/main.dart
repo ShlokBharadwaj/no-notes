@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nonotes/constants/routes.dart';
 import 'package:nonotes/services/auth/auth_services.dart';
+import 'package:nonotes/services/auth/bloc/auth_bloc.dart';
+import 'package:nonotes/services/auth/firebase_auth_provider.dart';
 import 'package:nonotes/views/login_view.dart';
 import 'package:nonotes/views/notes/create_update_note_view.dart';
 import 'package:nonotes/views/notes/notes_view.dart';
@@ -16,7 +19,10 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.deepPurple,
     ),
-    home: const HomePage(),
+    home: BlocProvider<AuthBloc>(
+      create: (context) => AuthBloc(FirebaseAuthProvider()),
+      child: const HomePage(),
+    ),
     routes: {
       loginRoute: (context) => const LoginView(),
       registerRoute: (context) => const RegisterView(),
