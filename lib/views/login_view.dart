@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nonotes/constants/routes.dart';
 import 'package:nonotes/services/auth/auth_exception.dart';
 import 'package:nonotes/services/auth/auth_services.dart';
+import 'package:nonotes/services/auth/bloc/auth_bloc.dart';
+import 'package:nonotes/services/auth/bloc/auth_event.dart';
 import 'package:nonotes/utilities/dialogs/error_dialogs.dart';
 
 class LoginView extends StatefulWidget {
@@ -63,28 +66,35 @@ class _LoginViewState extends State<LoginView> {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  final email = _email.text;
-                  final password = _password.text;
-                  await AuthService.firebase().logIn(
-                    email: email,
-                    password: password,
-                  );
-                  final user = AuthService.firebase().currentUser;
-                  if (user?.isEmailVerified ?? false) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      notesRoute,
-                      (route) => false,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('User Successfully Logged In'),
-                      ),
-                    );
-                  } else {
-                    await AuthService.firebase().sendEmailVerification();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        verifyEmailRoute, (route) => false);
-                  }
+                  context.read<AuthBloc>().add(
+                        AuthEventLogIn(
+                          _email.text,
+                          _password.text,
+                        ),
+                      );
+
+                  // final email = _email.text;
+                  // final password = _password.text;
+                  // await AuthService.firebase().logIn(
+                  //   email: email,
+                  //   password: password,
+                  // );
+                  // final user = AuthService.firebase().currentUser;
+                  // if (user?.isEmailVerified ?? false) {
+                  //   Navigator.of(context).pushNamedAndRemoveUntil(
+                  //     notesRoute,
+                  //     (route) => false,
+                  //   );
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     const SnackBar(
+                  //       content: Text('User Successfully Logged In'),
+                  //     ),
+                  //   );
+                  // } else {
+                  //   await AuthService.firebase().sendEmailVerification();
+                  //   Navigator.of(context).pushNamedAndRemoveUntil(
+                  //       verifyEmailRoute, (route) => false);
+                  // }
                 } on FirebaseException catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

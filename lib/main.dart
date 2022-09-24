@@ -35,8 +35,6 @@ void main() {
   ));
 }
 
-// typo
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
