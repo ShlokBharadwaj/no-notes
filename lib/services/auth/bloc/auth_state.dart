@@ -10,6 +10,10 @@ class AuthStateLoading extends AuthState {
   const AuthStateLoading();
 }
 
+class AuthStateNeedsEmailVerification extends AuthState {
+  const AuthStateNeedsEmailVerification();
+}
+
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
   const AuthStateLoggedIn(this.user);
@@ -20,12 +24,9 @@ class AuthStateLoginFailure extends AuthState {
   const AuthStateLoginFailure(this.exception);
 }
 
-class AuthStateNeedsEmailVerification extends AuthState {
-  const AuthStateNeedsEmailVerification();
-}
-
 class AuthStateLoggedOut extends AuthState {
-  const AuthStateLoggedOut();
+  final Exception? exception;
+  const AuthStateLoggedOut(this.exception);
 }
 
 class AuthStateLogOutFailure extends AuthState {
@@ -33,27 +34,8 @@ class AuthStateLogOutFailure extends AuthState {
   const AuthStateLogOutFailure(this.exception);
 }
 
-class AuthStateSignUpFailure extends AuthState {
-  final Exception exception;
-  const AuthStateSignUpFailure(this.exception);
-}
-
-class AuthStateEmailVerificationFailure extends AuthState {
-  final Exception exception;
-  const AuthStateEmailVerificationFailure(this.exception);
-}
-
-class AuthStateEmailVerificationSuccess extends AuthState {
-  const AuthStateEmailVerificationSuccess();
-}
-
-class AuthStatePasswordResetFailure extends AuthState {
-  final Exception exception;
-  const AuthStatePasswordResetFailure(this.exception);
-}
-
-class AuthStatePasswordResetSuccess extends AuthState {
-  const AuthStatePasswordResetSuccess();
+class AuthStateDeleteUser extends AuthState {
+  const AuthStateDeleteUser();
 }
 
 class AuthStateDeleteUserFailure extends AuthState {
@@ -61,15 +43,34 @@ class AuthStateDeleteUserFailure extends AuthState {
   const AuthStateDeleteUserFailure(this.exception);
 }
 
-class AuthStateDeleteUser extends AuthState {
-  const AuthStateDeleteUser();
-}
+// class AuthStateSignUpFailure extends AuthState {
+//   final Exception exception;
+//   const AuthStateSignUpFailure(this.exception);
+// }
 
-class AuthStateEmailVerificationResendFailure extends AuthState {
-  final Exception exception;
-  const AuthStateEmailVerificationResendFailure(this.exception);
-}
+// class AuthStateEmailVerificationFailure extends AuthState {
+//   final Exception exception;
+//   const AuthStateEmailVerificationFailure(this.exception);
+// }
 
-class AuthStateEmailVerificationResendSuccess extends AuthState {
-  const AuthStateEmailVerificationResendSuccess();
-}
+// class AuthStateEmailVerificationSuccess extends AuthState {
+//   const AuthStateEmailVerificationSuccess();
+// }
+
+// class AuthStatePasswordResetFailure extends AuthState {
+//   final Exception exception;
+//   const AuthStatePasswordResetFailure(this.exception);
+// }
+
+// class AuthStatePasswordResetSuccess extends AuthState {
+//   const AuthStatePasswordResetSuccess();
+// }
+
+// class AuthStateEmailVerificationResendFailure extends AuthState {
+//   final Exception exception;
+//   const AuthStateEmailVerificationResendFailure(this.exception);
+// }
+
+// class AuthStateEmailVerificationResendSuccess extends AuthState {
+//   const AuthStateEmailVerificationResendSuccess();
+// }
