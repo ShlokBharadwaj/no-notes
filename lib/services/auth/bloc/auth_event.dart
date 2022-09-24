@@ -18,3 +18,7 @@ class AuthEventLogIn extends AuthEvent {
 class AuthEventLogOut extends AuthEvent {
   const AuthEventLogOut();
 }
+
+class AuthEventDeleteUser extends AuthEvent {
+  const AuthEventDeleteUser();
+}

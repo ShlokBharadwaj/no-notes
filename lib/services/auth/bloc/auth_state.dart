@@ -61,8 +61,8 @@ class AuthStateDeleteUserFailure extends AuthState {
   const AuthStateDeleteUserFailure(this.exception);
 }
 
-class AuthStateDeleteUserSuccess extends AuthState {
-  const AuthStateDeleteUserSuccess();
+class AuthStateDeleteUser extends AuthState {
+  const AuthStateDeleteUser();
 }
 
 class AuthStateEmailVerificationResendFailure extends AuthState {

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext;
 import 'package:nonotes/constants/routes.dart';
 import 'package:nonotes/enums/menu_action.dart';
 import 'package:nonotes/services/auth/auth_services.dart';
+import 'package:nonotes/services/auth/bloc/auth_bloc.dart';
+import 'package:nonotes/services/auth/bloc/auth_event.dart';
 import 'package:nonotes/services/cloud/cloud_note.dart';
 import 'package:nonotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:nonotes/utilities/dialogs/delete_user_dialog.dart';
@@ -35,18 +38,24 @@ class _NotesViewState extends State<NotesView> {
             onSelected: (action) async {
               if (action == MenuAction.logout) {
                 if (await showLogoutDialog(context)) {
-                  await AuthService.firebase().logOut();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginRoute, (_) => false);
+                  context.read<AuthBloc>().add(
+                        const AuthEventLogOut(),
+                      );
+                  // await AuthService.firebase().logOut();
+                  // Navigator.of(context)
+                  //     .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                 }
               }
               if (action == MenuAction.deleteUser) {
                 if (await showDeleteUserDialog(context)) {
-                  await AuthService.firebase().deleteUser();
+                  context.read<AuthBloc>().add(
+                        const AuthEventDeleteUser(),
+                      );
+                  // await AuthService.firebase().deleteUser();
                   // TODO: Add delete notes if user account is deleted
                   // await _notesService.deleteNote(documentId: userId);
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(registerRoute, (_) => false);
+                  // Navigator.of(context)
+                  //     .pushNamedAndRemoveUntil(registerRoute, (_) => false);
                 }
               }
             },
