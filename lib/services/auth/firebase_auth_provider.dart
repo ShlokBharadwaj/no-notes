@@ -28,12 +28,20 @@ class FirebaseAuthProvider implements AuthProvider {
       if (user != null) {
         return user;
       } else {
-        throw UserNotLoggedInAuthException("User not logged in");
+        throw UserNotLoggedInAuthException();
       }
     } on FirebaseAuthException catch (e) {
-      throw FirebaseException(e.message ?? "Error");
+      if (e.code == 'weak-password') {
+        throw WeakPasswordAuthException();
+      } else if (e.code == 'email-already-in-use') {
+        throw EmailAlreadyInUseAuthException();
+      } else if (e.code == 'invalid-email') {
+        throw InvalidEmailAuthException();
+      } else {
+        throw GenericAuthException();
+      }
     } catch (_) {
-      throw NonFirebaseException("Error: ${_.toString()}");
+      throw GenericAuthException();
     }
   }
 
@@ -53,18 +61,26 @@ class FirebaseAuthProvider implements AuthProvider {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       final user = currentUser;
       if (user != null) {
         return user;
       } else {
-        throw UserNotLoggedInAuthException("User not logged in");
+        throw UserNotLoggedInAuthException();
       }
     } on FirebaseAuthException catch (e) {
-      throw FirebaseException(e.message ?? "Error");
+      if (e.code == 'user-not-found') {
+        throw UserNotFoundAuthException();
+      } else if (e.code == 'wrong-password') {
+        throw WrongPasswordAuthException();
+      } else {
+        throw GenericAuthException();
+      }
     } catch (_) {
-      throw NonFirebaseException("Error: ${_.toString()}");
+      throw GenericAuthException();
     }
   }
 
@@ -74,7 +90,7 @@ class FirebaseAuthProvider implements AuthProvider {
     if (user != null) {
       await FirebaseAuth.instance.signOut();
     } else {
-      throw UserNotLoggedInAuthException("User not logged in");
+      throw UserNotLoggedInAuthException();
     }
   }
 
@@ -85,7 +101,7 @@ class FirebaseAuthProvider implements AuthProvider {
       await user.delete();
       return AuthUser.fromFirebase(user);
     } else {
-      throw UserNotLoggedInAuthException("User not logged in");
+      throw UserNotLoggedInAuthException();
     }
   }
 
@@ -95,7 +111,7 @@ class FirebaseAuthProvider implements AuthProvider {
     if (user != null) {
       await user.sendEmailVerification();
     } else {
-      throw UserNotLoggedInAuthException("User not logged in");
+      throw UserNotLoggedInAuthException();
     }
   }
 
