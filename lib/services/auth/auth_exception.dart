@@ -17,16 +17,16 @@ class GenericAuthException implements Exception {}
 
 class UserNotLoggedInAuthException implements Exception {}
 
-// // Non firebase exceptions
+// Non firebase exceptions
 
-// class NonFirebaseException implements Exception {
-//   final String message;
+class NonFirebaseException implements Exception {
+  final String message;
 
-//   NonFirebaseException(this.message);
+  NonFirebaseException(this.message);
 
-//   @override
-//   String toString() => message;
-// }
+  @override
+  String toString() => message;
+}
 
 // class UserNotLoggedInAuthException implements Exception {
 //   final String message;
@@ -37,13 +37,13 @@ class UserNotLoggedInAuthException implements Exception {}
 //   String toString() => message;
 // }
 
-// // Firebase exceptions
+// Firebase exceptions
 
-// class FirebaseException implements Exception {
-//   final String message;
+class FirebaseException implements Exception {
+  final String message;
 
-//   FirebaseException(this.message);
+  FirebaseException(this.message);
 
-//   @override
-//   String toString() => message;
-// }
+  @override
+  String toString() => message;
+}

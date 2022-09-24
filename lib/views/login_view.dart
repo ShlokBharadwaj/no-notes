@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nonotes/constants/routes.dart';
-import 'package:nonotes/services/auth/auth_exception.dart' as FirebaseExcp;
+import 'package:nonotes/services/auth/auth_exception.dart';
 import 'package:nonotes/services/auth/auth_services.dart';
 import 'package:nonotes/services/auth/bloc/auth_bloc.dart';
 import 'package:nonotes/services/auth/bloc/auth_event.dart';
@@ -66,19 +66,21 @@ class _LoginViewState extends State<LoginView> {
             ),
             const SizedBox(height: 16),
             BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state is AuthStateLoggedOut) {
-                  if (state.exception is FirebaseAuthException) {
-                    final exception = state.exception as FirebaseAuthException;
-                    if (exception.code == "user-not-found") {
-                      showErrorDialog(context, 'User not found');
-                    } else if (exception.code == "wrong-password") {
-                      showErrorDialog(context, 'Wrong credentials');
-                    } else {
-                      showErrorDialog(context, 'Authentication error');
-                    }
+                  if (state.exception is UserNotFoundAuthException) {
+                    await showErrorDialog(context, 'User not found');
+                  } else if (state.exception is WrongPasswordAuthException) {
+                    await showErrorDialog(context, 'Wrong credentials');
+                  } else if (state.exception is GenericAuthException) {
+                    await showErrorDialog(context, 'Authentication error');
                   }
                 }
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('User Successfully Logged In'),
+                  ),
+                );
               },
               child: ElevatedButton(
                 onPressed: () async {
@@ -105,7 +107,7 @@ class _LoginViewState extends State<LoginView> {
                 } on FirebaseException catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(e.message!),
+                      content: Text(e.message),
                     ),
                   );
                 } catch (e) {
