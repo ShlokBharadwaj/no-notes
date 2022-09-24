@@ -72,29 +72,6 @@ class _LoginViewState extends State<LoginView> {
                           _password.text,
                         ),
                       );
-
-                  // final email = _email.text;
-                  // final password = _password.text;
-                  // await AuthService.firebase().logIn(
-                  //   email: email,
-                  //   password: password,
-                  // );
-                  // final user = AuthService.firebase().currentUser;
-                  // if (user?.isEmailVerified ?? false) {
-                  //   Navigator.of(context).pushNamedAndRemoveUntil(
-                  //     notesRoute,
-                  //     (route) => false,
-                  //   );
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     const SnackBar(
-                  //       content: Text('User Successfully Logged In'),
-                  //     ),
-                  //   );
-                  // } else {
-                  //   await AuthService.firebase().sendEmailVerification();
-                  //   Navigator.of(context).pushNamedAndRemoveUntil(
-                  //       verifyEmailRoute, (route) => false);
-                  // }
                 } on FirebaseException catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
