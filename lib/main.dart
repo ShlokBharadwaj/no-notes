@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nonotes/constants/routes.dart';
-import 'package:nonotes/services/auth/auth_services.dart';
 import 'package:nonotes/services/auth/bloc/auth_bloc.dart';
+import 'package:nonotes/services/auth/bloc/auth_event.dart';
+import 'package:nonotes/services/auth/bloc/auth_state.dart';
 import 'package:nonotes/services/auth/firebase_auth_provider.dart';
 import 'package:nonotes/views/login_view.dart';
 import 'package:nonotes/views/notes/create_update_note_view.dart';
@@ -39,30 +40,21 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: AuthService.firebase().initialize(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return const Center(child: CircularProgressIndicator());
-          case ConnectionState.done:
-            final user = AuthService.firebase().currentUser;
-            if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error}'),
-              );
-            }
-            if (user != null) {
-              if (user.isEmailVerified) {
-                return const NotesView();
-              } else {
-                return const VerifyEmailView();
-              }
-            } else {
-              return const LoginView();
-            }
-          default:
-            return const Center(child: CircularProgressIndicator());
+    context.read<AuthBloc>().add(const AuthEventInitialize());
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthStateLoggedIn) {
+          return const NotesView();
+        } else if (state is AuthStateNeedsEmailVerification) {
+          return const VerifyEmailView();
+        } else if (state is AuthStateLoggedOut) {
+          return const LoginView();
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
       },
     );
