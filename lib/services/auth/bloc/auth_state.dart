@@ -26,7 +26,11 @@ class AuthStateLoggedIn extends AuthState {
 
 class AuthStateLoggedOut extends AuthState {
   final Exception? exception;
-  const AuthStateLoggedOut(this.exception);
+  final bool isLoading;
+  const AuthStateLoggedOut({
+    required this.exception,
+    required this.isLoading,
+  });
 }
 
 class AuthStateDeleteUser extends AuthState {
