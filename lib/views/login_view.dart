@@ -76,11 +76,6 @@ class _LoginViewState extends State<LoginView> {
                     await showErrorDialog(context, 'Authentication error');
                   }
                 }
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('User Successfully Logged In'),
-                  ),
-                );
               },
               child: ElevatedButton(
                 onPressed: () async {
@@ -90,6 +85,11 @@ class _LoginViewState extends State<LoginView> {
                           _password.text,
                         ),
                       );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('User Successfully Logged In'),
+                    ),
+                  );
                 },
                 child: const Text('Login'),
               ),
