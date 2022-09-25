@@ -10,6 +10,11 @@ class AuthStateUninitialized extends AuthState {
   const AuthStateUninitialized();
 }
 
+class AuthStateRegistering extends AuthState {
+  final Exception? exception;
+  const AuthStateRegistering(this.exception);
+}
+
 class AuthStateNeedsEmailVerification extends AuthState {
   const AuthStateNeedsEmailVerification();
 }
