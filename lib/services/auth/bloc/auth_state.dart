@@ -21,7 +21,11 @@ class AuthStateNeedsEmailVerification extends AuthState {
 
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
-  const AuthStateLoggedIn(this.user);
+  final String greetings;
+  const AuthStateLoggedIn({
+    required this.user,
+    required this.greetings,
+  });
 }
 
 class AuthStateLoggedOut extends AuthState {
