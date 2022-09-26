@@ -91,10 +91,7 @@ class _RegisterViewState extends State<RegisterView> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      loginRoute,
-                      (route) => false,
-                    );
+                    context.read<AuthBloc>().add(const AuthEventLogOut());
                   },
                   child: const Text("Already Registered? Login here!"))
             ],
