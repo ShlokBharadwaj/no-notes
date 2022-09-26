@@ -4,7 +4,16 @@ import 'package:nonotes/services/auth/bloc/auth_event.dart';
 import 'package:nonotes/services/auth/bloc/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(AuthProvider provider) : super(const AuthStateLoading()) {
+  AuthBloc(AuthProvider provider) : super(const AuthStateUninitialized()) {
+// Send email Verification
+    on<AuthEventSendEmailVerification>(
+      (event, emit) async {
+        await provider.sendEmailVerification();
+        emit(state);
+      },
+    );
+
+    // Initialization
     on<AuthEventInitialize>(((event, emit) async {
       await provider.initialize();
       final user = provider.currentUser;
@@ -35,7 +44,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
     on<AuthEventLogOut>((event, emit) async {
-      emit(const AuthStateLoading());
+      emit(const AuthStateUninitialized());
       try {
         await provider.logOut();
         emit(const AuthStateLoggedOut(null));
@@ -44,7 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
     on<AuthEventDeleteUser>((event, emit) async {
-      emit(const AuthStateLoading());
+      emit(const AuthStateUninitialized());
       try {
         await provider.deleteUser();
         emit(const AuthStateLoggedOut(null));
