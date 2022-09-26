@@ -36,48 +36,48 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Email',
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) async {
+        if (state is AuthStateLoggedOut) {
+          if (state.exception is UserNotFoundAuthException) {
+            await showErrorDialog(context, 'User not found');
+          } else if (state.exception is WrongPasswordAuthException) {
+            await showErrorDialog(context, 'Wrong credentials');
+          } else if (state.exception is GenericAuthException) {
+            await showErrorDialog(context, 'Authentication error');
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text("Login")),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: _email,
+                enableSuggestions: false,
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _password,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
+              const SizedBox(height: 16),
+              TextField(
+                controller: _password,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) async {
-                if (state is AuthStateLoggedOut) {
-                  if (state.exception is UserNotFoundAuthException) {
-                    await showErrorDialog(context, 'User not found');
-                  } else if (state.exception is WrongPasswordAuthException) {
-                    await showErrorDialog(context, 'Wrong credentials');
-                  } else if (state.exception is GenericAuthException) {
-                    await showErrorDialog(context, 'Authentication error');
-                  }
-                }
-              },
-              child: ElevatedButton(
+              const SizedBox(height: 16),
+              ElevatedButton(
                 onPressed: () async {
                   context.read<AuthBloc>().add(
                         AuthEventLogIn(
@@ -93,41 +93,41 @@ class _LoginViewState extends State<LoginView> {
                 },
                 child: const Text('Login'),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await AuthService.firebase()
-                      .sendPasswordResetEmail(email: _email.text);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Password Reset Email Sent'),
-                    ),
-                  );
-                } on FirebaseException catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(e.message),
-                    ),
-                  );
-                } catch (e) {
-                  await showErrorDialog(
-                    context,
-                    e.toString(),
-                  );
-                }
-              },
-              child: const Text('Reset Password'),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    registerRoute,
-                    (route) => false,
-                  );
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await AuthService.firebase()
+                        .sendPasswordResetEmail(email: _email.text);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Password Reset Email Sent'),
+                      ),
+                    );
+                  } on FirebaseException catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(e.message),
+                      ),
+                    );
+                  } catch (e) {
+                    await showErrorDialog(
+                      context,
+                      e.toString(),
+                    );
+                  }
                 },
-                child: const Text("Not registered? Register here!"))
-          ],
+                child: const Text('Reset Password'),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      registerRoute,
+                      (route) => false,
+                    );
+                  },
+                  child: const Text("Not registered? Register here!"))
+            ],
+          ),
         ),
       ),
     );
