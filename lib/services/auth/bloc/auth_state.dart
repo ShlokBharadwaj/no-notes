@@ -1,4 +1,6 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart' show immutable;
+import 'package:flutter/material.dart';
 import 'package:nonotes/services/auth/auth_user.dart';
 
 @immutable
@@ -21,20 +23,21 @@ class AuthStateNeedsEmailVerification extends AuthState {
 
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
-  final String greetings;
   const AuthStateLoggedIn({
     required this.user,
-    required this.greetings,
   });
 }
 
-class AuthStateLoggedOut extends AuthState {
+class AuthStateLoggedOut extends AuthState with EquatableMixin {
   final Exception? exception;
   final bool isLoading;
   const AuthStateLoggedOut({
     required this.exception,
     required this.isLoading,
   });
+
+  @override
+  List<Object?> get props => [exception, isLoading];
 }
 
 class AuthStateDeleteUser extends AuthState {
