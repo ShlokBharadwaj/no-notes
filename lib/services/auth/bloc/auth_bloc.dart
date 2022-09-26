@@ -112,13 +112,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+    // Delete user
     on<AuthEventDeleteUser>((event, emit) async {
-      emit(const AuthStateUninitialized());
       try {
         await provider.deleteUser();
-        emit(const AuthStateLoggedOut(null));
+        emit(
+          const AuthStateDeleteUser(),
+        );
       } on Exception catch (e) {
-        emit(AuthStateDeleteUserFailure(e));
+        emit(
+          AuthStateDeleteUserFailure(e),
+        );
       }
     });
   }
