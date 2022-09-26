@@ -47,6 +47,8 @@ class HomePage extends StatelessWidget {
           return const LoginView();
         } else if (state is AuthStateDeleteUser) {
           return const RegisterView();
+        } else if (state is AuthStateRegistering) {
+          return const RegisterView();
         } else {
           return const Scaffold(
             body: Center(
