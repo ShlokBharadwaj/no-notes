@@ -108,26 +108,9 @@ class _LoginViewState extends State<LoginView> {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  try {
-                    await AuthService.firebase()
-                        .sendPasswordResetEmail(email: _email.text);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Password Reset Email Sent'),
-                      ),
-                    );
-                  } on FirebaseException catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(e.message),
-                      ),
-                    );
-                  } catch (e) {
-                    await showErrorDialog(
-                      context,
-                      e.toString(),
-                    );
-                  }
+                  context.read<AuthBloc>().add(
+                        AuthEventResetPassword(_email.text),
+                      );
                 },
                 child: const Text('Reset Password'),
               ),
