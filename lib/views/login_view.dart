@@ -133,10 +133,9 @@ class _LoginViewState extends State<LoginView> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      registerRoute,
-                      (route) => false,
-                    );
+                    context.read<AuthBloc>().add(
+                          const AuthEventShouldRegister(),
+                        );
                   },
                   child: const Text("Not registered? Register here!"))
             ],
