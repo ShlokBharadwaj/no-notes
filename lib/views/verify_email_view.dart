@@ -36,9 +36,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 child: const Text("Send Verification Email Again"),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  await AuthService.firebase().logOut();
-                  Navigator.of(context).pushReplacementNamed(registerRoute);
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        const AuthEventLogOut(),
+                      );
                 },
                 child: const Text("Restart"),
               )
