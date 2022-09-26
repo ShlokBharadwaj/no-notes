@@ -5,11 +5,29 @@ import 'package:nonotes/services/auth/bloc/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthProvider provider) : super(const AuthStateUninitialized()) {
-// Send email Verification
+    // Send email Verification
     on<AuthEventSendEmailVerification>(
       (event, emit) async {
         await provider.sendEmailVerification();
         emit(state);
+      },
+    );
+
+    // Registration
+    on<AuthEventRegister>(
+      (event, emit) async {
+        try {
+          await provider.createUser(
+            email: event.email,
+            password: event.password,
+          );
+          await provider.sendEmailVerification();
+          emit(
+            const AuthStateNeedsEmailVerification(),
+          );
+        } on Exception catch (e) {
+          emit(AuthStateRegistering(e));
+        }
       },
     );
 
