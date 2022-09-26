@@ -25,10 +25,6 @@ void main() {
       child: const HomePage(),
     ),
     routes: {
-      loginRoute: (context) => const LoginView(),
-      registerRoute: (context) => const RegisterView(),
-      notesRoute: (context) => const NotesView(),
-      verifyEmailRoute: (context) => const VerifyEmailView(),
       createOrUpdateNotesRoute: (context) => const CreateUpdateNoteView(),
     },
     // darkTheme: ThemeData.dark(),
