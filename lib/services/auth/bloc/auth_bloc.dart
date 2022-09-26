@@ -91,15 +91,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
       }
     });
+
+    // Logout
     on<AuthEventLogOut>((event, emit) async {
-      emit(const AuthStateUninitialized());
       try {
         await provider.logOut();
-        emit(const AuthStateLoggedOut(null));
+        emit(
+          const AuthStateLoggedOut(
+            exception: null,
+            isLoading: false,
+          ),
+        );
       } on Exception catch (e) {
-        emit(AuthStateLogOutFailure(e));
+        emit(
+          AuthStateLoggedOut(
+            exception: e,
+            isLoading: false,
+          ),
+        );
       }
     });
+
     on<AuthEventDeleteUser>((event, emit) async {
       emit(const AuthStateUninitialized());
       try {
