@@ -4,6 +4,7 @@ import 'package:nonotes/constants/routes.dart';
 import 'package:nonotes/services/auth/auth_exception.dart';
 import 'package:nonotes/services/auth/auth_services.dart';
 import 'package:nonotes/services/auth/bloc/auth_bloc.dart';
+import 'package:nonotes/services/auth/bloc/auth_event.dart';
 import 'package:nonotes/services/auth/bloc/auth_state.dart';
 import 'package:nonotes/utilities/dialogs/error_dialogs.dart';
 
@@ -79,47 +80,12 @@ class _RegisterViewState extends State<RegisterView> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () async {
-                  try {
-                    await AuthService.firebase().createUser(
-                      email: _email.text,
-                      password: _password.text,
-                    );
-                    final user = AuthService.firebase().currentUser;
-                    await AuthService.firebase().sendEmailVerification();
-                    Navigator.of(context).pushNamed(
-                      verifyEmailRoute,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('User registered'),
-                      ),
-                    );
-                  } on WeakPasswordAuthException {
-                    await showErrorDialog(
-                      context,
-                      'Weak password',
-                    );
-                  } on EmailAlreadyInUseAuthException {
-                    await showErrorDialog(
-                      context,
-                      'Email is already in use',
-                    );
-                  } on InvalidEmailAuthException {
-                    await showErrorDialog(
-                      context,
-                      'This is an invalid email address',
-                    );
-                  } on GenericAuthException {
-                    await showErrorDialog(
-                      context,
-                      'Failed to register',
-                    );
-                  } catch (e) {
-                    await showErrorDialog(
-                      context,
-                      e.toString(),
-                    );
-                  }
+                  context.read<AuthBloc>().add(
+                        AuthEventRegister(
+                          _email.text,
+                          _password.text,
+                        ),
+                      );
                 },
                 child: const Text('Register'),
               ),
