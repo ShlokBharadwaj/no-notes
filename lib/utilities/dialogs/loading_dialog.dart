@@ -12,6 +12,7 @@ CloseDialog showLoadingDialog({
       children: [
         const CircularProgressIndicator(),
         const SizedBox(width: 20),
+        const SizedBox(height: 20),
         Text(text),
       ],
     ),
