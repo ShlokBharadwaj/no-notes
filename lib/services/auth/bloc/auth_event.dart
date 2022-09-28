@@ -38,6 +38,6 @@ class AuthEventDeleteUser extends AuthEvent {
 }
 
 class AuthEventResetPassword extends AuthEvent {
-  final String email;
-  const AuthEventResetPassword(this.email);
+  final String? email;
+  const AuthEventResetPassword({this.email});
 }
