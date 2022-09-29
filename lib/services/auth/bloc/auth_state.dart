@@ -38,6 +38,18 @@ class AuthStateNeedsEmailVerification extends AuthState {
         );
 }
 
+class AuthStateResetPassword extends AuthState {
+  final Exception? exception;
+  final bool hasSentEmail;
+  const AuthStateResetPassword(
+    this.exception,
+    this.hasSentEmail, {
+    required bool isLoading,
+  }) : super(
+          isLoading: isLoading,
+        );
+}
+
 class AuthStateLoggedIn extends AuthState {
   final AuthUser user;
   const AuthStateLoggedIn({
