@@ -95,7 +95,7 @@ class _LoginViewState extends State<LoginView> {
               ElevatedButton(
                 onPressed: () async {
                   context.read<AuthBloc>().add(
-                        AuthEventResetPassword(_email.text),
+                        const AuthEventResetPassword(),
                       );
                 },
                 child: const Text('Reset Password'),
