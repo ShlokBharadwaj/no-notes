@@ -98,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
                         const AuthEventResetPassword(),
                       );
                 },
-                child: const Text('Reset Password'),
+                child: const Text('Forgot Password?'),
               ),
               ElevatedButton(
                   onPressed: () {
