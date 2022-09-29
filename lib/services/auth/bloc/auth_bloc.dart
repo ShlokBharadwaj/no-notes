@@ -141,6 +141,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             isLoading: false,
           ),
         );
+        if (event.email == null) {
+          return;
+        }
+        emit(
+          const AuthStateResetPassword(
+            exception: null,
+            hasSentEmail: false,
+            isLoading: true,
+          ),
+        );
+
+        bool didSendEmail;
+        Exception? exception;
+
+        try {
+          await provider.sendPasswordResetEmail(email: event.email!);
+          didSendEmail = true;
+          exception = null;
+        } on Exception catch (e) {
+          didSendEmail = false;
+          exception = e;
+        }
+
+        emit(
+          AuthStateResetPassword(
+            exception: exception,
+            hasSentEmail: didSendEmail,
+            isLoading: false,
+          ),
+        );
       },
     );
 
