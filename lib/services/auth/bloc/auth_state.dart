@@ -41,9 +41,9 @@ class AuthStateNeedsEmailVerification extends AuthState {
 class AuthStateResetPassword extends AuthState {
   final Exception? exception;
   final bool hasSentEmail;
-  const AuthStateResetPassword(
-    this.exception,
-    this.hasSentEmail, {
+  const AuthStateResetPassword({
+    required this.exception,
+    required this.hasSentEmail,
     required bool isLoading,
   }) : super(
           isLoading: isLoading,
