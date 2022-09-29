@@ -131,6 +131,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+    // Reset Password
+    on<AuthEventResetPassword>(
+      (event, emit) async {
+        emit(
+          const AuthStateResetPassword(
+            exception: null,
+            hasSentEmail: false,
+            isLoading: false,
+          ),
+        );
+      },
+    );
+
     // Delete user
     on<AuthEventDeleteUser>((event, emit) async {
       try {
