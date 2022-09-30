@@ -34,27 +34,28 @@ class ResetPasswordViewState extends State<ResetPasswordView> {
       listener: (context, state) async {
         if (state is AuthStateResetPassword) {
           // ScaffoldMessenger.of(context).showSnackBar(
-          // SnackBar(
-          // content: Text(state.message),
-          // ),
+          //   SnackBar(
+          //     content: Text(state.toString()),
+          //   ),
           // );
           if (state.hasSentEmail) {
             _controller.clear();
             await showPasswordResetSentDialog(context);
           }
-          if (state.exception != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.exception!.toString()),
-              ),
-            );
-          }
           // if (state.exception != null) {
-          //   await showErrorDialog(
-          //     context,
-          //     'We could not process your request. Please make sure you are registered and try again.',
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: Text(state.exception!.toString()),
+          //     ),
           //   );
           // }
+
+          if (state.exception != null) {
+            await showErrorDialog(
+              context,
+              'We could not process your request. Please make sure you are registered and try again.',
+            );
+          }
         }
       },
       child: Scaffold(
