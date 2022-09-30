@@ -10,6 +10,7 @@ import 'package:nonotes/views/login_view.dart';
 import 'package:nonotes/views/notes/create_update_note_view.dart';
 import 'package:nonotes/views/notes/notes_view.dart';
 import 'package:nonotes/views/register_view.dart';
+import 'package:nonotes/views/reset_password_view.dart';
 import 'package:nonotes/views/verify_email_view.dart';
 // import 'dart:developer' as devtools show log;
 
@@ -56,6 +57,8 @@ class HomePage extends StatelessWidget {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedOut) {
           return const LoginView();
+        } else if (state is AuthStateResetPassword) {
+          return const ResetPasswordView();
         } else if (state is AuthStateDeleteUser) {
           return const RegisterView();
         } else if (state is AuthStateRegistering) {
