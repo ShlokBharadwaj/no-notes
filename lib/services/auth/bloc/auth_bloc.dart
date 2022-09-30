@@ -26,29 +26,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
     );
 
-    // Registration
-    on<AuthEventRegister>(
-      (event, emit) async {
-        try {
-          await provider.createUser(
-            email: event.email,
-            password: event.password,
-          );
-          await provider.sendEmailVerification();
-          emit(
-            const AuthStateNeedsEmailVerification(
-              isLoading: false,
-            ),
-          );
-        } on Exception catch (e) {
-          emit(AuthStateRegistering(
-            exception: e,
-            isLoading: false,
-          ));
-        }
-      },
-    );
-
     // Initialization
     on<AuthEventInitialize>(
       ((event, emit) async {
@@ -72,6 +49,36 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ));
         }
       }),
+    );
+
+    // Registration
+    on<AuthEventRegister>(
+      (event, emit) async {
+        emit(
+          const AuthStateRegistering(
+            exception: null,
+            isLoading: true,
+            registeringText: 'Registering...',
+          ),
+        );
+        try {
+          await provider.createUser(
+            email: event.email,
+            password: event.password,
+          );
+          await provider.sendEmailVerification();
+          emit(
+            const AuthStateNeedsEmailVerification(
+              isLoading: false,
+            ),
+          );
+        } on Exception catch (e) {
+          emit(AuthStateRegistering(
+            exception: e,
+            isLoading: false,
+          ));
+        }
+      },
     );
 
     // Login

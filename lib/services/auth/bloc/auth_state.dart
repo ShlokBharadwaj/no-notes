@@ -21,14 +21,33 @@ class AuthStateUninitialized extends AuthState {
         );
 }
 
-class AuthStateRegistering extends AuthState {
+class AuthStateRegistering extends AuthState with EquatableMixin {
   final Exception? exception;
   const AuthStateRegistering({
     required this.exception,
-    required isLoading,
+    required bool isLoading,
+    String? registeringText,
   }) : super(
           isLoading: isLoading,
+          loadingText: registeringText,
         );
+  @override
+  List<Object?> get props => [exception, isLoading];
+}
+
+class AuthStateLoggedOut extends AuthState with EquatableMixin {
+  final Exception? exception;
+  const AuthStateLoggedOut({
+    required this.exception,
+    required bool isLoading,
+    String? loadingText,
+  }) : super(
+          isLoading: isLoading,
+          loadingText: loadingText,
+        );
+
+  @override
+  List<Object?> get props => [exception, isLoading];
 }
 
 class AuthStateNeedsEmailVerification extends AuthState {
@@ -58,21 +77,6 @@ class AuthStateLoggedIn extends AuthState {
   }) : super(
           isLoading: isLoading,
         );
-}
-
-class AuthStateLoggedOut extends AuthState with EquatableMixin {
-  final Exception? exception;
-  const AuthStateLoggedOut({
-    required this.exception,
-    required bool isLoading,
-    String? loadingText,
-  }) : super(
-          isLoading: isLoading,
-          loadingText: loadingText,
-        );
-
-  @override
-  List<Object?> get props => [exception, isLoading];
 }
 
 class AuthStateDeleteUser extends AuthState {
