@@ -52,63 +52,65 @@ class _LoginViewState extends State<LoginView> {
         appBar: AppBar(title: const Text("Login")),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _password,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
-                  context.read<AuthBloc>().add(
-                        AuthEventLogIn(
-                          _email.text,
-                          _password.text,
-                        ),
-                      );
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(
-                  //     content: Text('User Successfully Logged In'),
-                  //   ),
-                  // );
-                },
-                child: const Text('Login'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  context.read<AuthBloc>().add(
-                        const AuthEventResetPassword(),
-                      );
-                },
-                child: const Text('Forgot Password?'),
-              ),
-              ElevatedButton(
-                  onPressed: () {
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () async {
                     context.read<AuthBloc>().add(
-                          const AuthEventShouldRegister(),
+                          AuthEventLogIn(
+                            _email.text,
+                            _password.text,
+                          ),
+                        );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   const SnackBar(
+                    //     content: Text('User Successfully Logged In'),
+                    //   ),
+                    // );
+                  },
+                  child: const Text('Login'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    context.read<AuthBloc>().add(
+                          const AuthEventResetPassword(),
                         );
                   },
-                  child: const Text("Not registered? Register here!"))
-            ],
+                  child: const Text('Forgot Password?'),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(
+                            const AuthEventShouldRegister(),
+                          );
+                    },
+                    child: const Text("Not registered? Register here!"))
+              ],
+            ),
           ),
         ),
       ),
