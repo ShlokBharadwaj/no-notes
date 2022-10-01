@@ -2,6 +2,11 @@
 
 ## Note taking application made in Flutter with Firebase backend. <br>
 
+***
+# APK: 
+[NoNotes](https://github.com/ShlokBharadwaj/no-notes/releases/tag/v1.0.0).
+
+
 # Screenshots: <br>
 <table style={border: "none"}>
 <tr>
