@@ -57,3 +57,6 @@ app.*.map.json
 /web/
 /windows/
 /linux/
+
+# for automatic build
+.github/
