@@ -64,43 +64,41 @@ class ResetPasswordViewState extends State<ResetPasswordView> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Text(
-                  'Enter your email address and we will send you a link to reset your password.',
+          child: Column(
+            children: [
+              const Text(
+                'Enter your email address and we will send you a link to reset your password.',
+              ),
+              const SizedBox(height: 16.0),
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                autocorrect: false,
+                autofocus: true,
+                controller: _controller,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
                 ),
-                const SizedBox(height: 16.0),
-                TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
-                  autofocus: true,
-                  controller: _controller,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(
-                          AuthEventResetPassword(
-                            email: _controller.text,
-                          ),
-                        );
-                  },
-                  child: const Text('Reset Password'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(
-                          const AuthEventLogOut(),
-                        );
-                  },
-                  child: const Text('Back to Login Page'),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        AuthEventResetPassword(
+                          email: _controller.text,
+                        ),
+                      );
+                },
+                child: const Text('Reset Password'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        const AuthEventLogOut(),
+                      );
+                },
+                child: const Text('Back to Login Page'),
+              ),
+            ],
           ),
         ),
       ),
