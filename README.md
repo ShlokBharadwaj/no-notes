@@ -1,16 +1,25 @@
-# nonotes
+# NoNotes
 
-A new Flutter project.
+## Note taking application made in Flutter with Firebase backend. <br>
 
-## Getting Started
+# Screenshots: <br>
+<table style={border: "none"}>
+<tr>
+<td><img src="assets/screenshots/login_screen.png" alt="Login screen"></td>
+<td><img src="assets/screenshots/register_screen.png" alt="Register screen"></td>
+<td><img src="assets/screenshots/reset_password.png" alt="Login screen"></td>
+</tr>
 
-This project is a starting point for a Flutter application.
+<tr>
+<td><img src="assets/screenshots/verify_email.png" alt="Login screen"></td>
+<td><img src="assets/screenshots/your_notes_view.png" alt="Login screen"></td>
+<td><img src="assets/screenshots/create_update_notes.png" alt="Login screen"></td>
+</tr>
 
-A few resources to get you started if this is your first Flutter project:
+<tr>
+<td><img src="assets/screenshots/delete_note.png" alt="Login screen"></td>
+<td><img src="assets/screenshots/logout_user.png" alt="Login screen"></td>
+<td><img src="assets/screenshots/delete_user.png" alt="Login screen"></td>
+</tr>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+</table>
