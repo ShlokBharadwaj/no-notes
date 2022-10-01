@@ -18,19 +18,20 @@ void main() {
   // devtools.log("main() called");
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-    title: 'No Notes',
-    theme: ThemeData(
-      primarySwatch: Colors.deepPurple,
-    ),
-    home: BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(FirebaseAuthProvider()),
-      child: const HomePage(),
-    ),
-    routes: {
-      createOrUpdateNotesRoute: (context) => const CreateUpdateNoteView(),
-    },
-    // darkTheme: ThemeData.dark(),
-  ));
+      title: 'No Notes',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(FirebaseAuthProvider()),
+        child: const HomePage(),
+      ),
+      routes: {
+        createOrUpdateNotesRoute: (context) => const CreateUpdateNoteView(),
+      },
+      debugShowCheckedModeBanner: false
+      // darkTheme: ThemeData.dark(),
+      ));
 }
 
 class HomePage extends StatelessWidget {
